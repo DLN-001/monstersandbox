@@ -135,6 +135,12 @@ function DragonMoveHeadMiddleToTop () {
     Dragon_Head_Position = 0
     Dragon_Is_Head_Moving = false
 }
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    Index += 1
+    if (Index <= custom.getMaxFrameIndex(assets.animation`N_Down_Middle`)) {
+        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
+    }
+})
 function test4 () {
     Dragon_Head_Position = 0
     Dragon_Is_Head_Moving = false
@@ -232,11 +238,12 @@ let HeroImageForwardCrouch: Image = null
 let HeroImageForward: Image = null
 let HeroImageBackward: Image = null
 let Hero: Sprite = null
+let Index = 0
+Index = 0
 initializeHeroVariables()
 info.setScore(0)
 scene.setBackgroundImage(assets.image`Forest`)
 tiles.setCurrentTilemap(tilemap`level1`)
-controller.moveSprite(Hero, 100, 0)
 tiles.placeOnTile(Hero, tiles.getTileLocation(2, 13))
 initializeHeroHealth()
 initializeHeroPower()

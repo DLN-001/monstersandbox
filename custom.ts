@@ -47,10 +47,19 @@ namespace custom {
 
         if (frameNumber < 0) {
             throw "Requested frame less than zero";
-        } else if (frameNumber > frames.length) {
+        } else if (frameNumber > frames.length - 1) {
             throw "Requested frame greater than frames length."
         }
 
         return frames.get(frameNumber)
+    }
+
+    /**
+     * Returns a maximum index for an image array.
+     * @param frames the frames array
+     */
+    //% block
+    export function getMaxFrameIndex(frames: Image[]): number {
+        return frames.length - 1
     }
 }
