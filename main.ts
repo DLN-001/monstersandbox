@@ -119,6 +119,12 @@ function test3 (Speed: number) {
     Segment3.setVelocity(0, Speed * 1)
     Segment2.setVelocity(0, Speed * 1)
 }
+controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
+    if (Index > 0) {
+        Index += -1
+        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
+    }
+})
 function DragonMoveHeadMiddleToTop () {
     Dragon_Is_Head_Moving = true
     Dragon_Head.vy = -10
@@ -135,12 +141,6 @@ function DragonMoveHeadMiddleToTop () {
     Dragon_Head_Position = 0
     Dragon_Is_Head_Moving = false
 }
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    Index += 1
-    if (Index <= custom.getMaxFrameIndex(assets.animation`N_Down_Middle`)) {
-        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
-    }
-})
 function test4 () {
     Dragon_Head_Position = 0
     Dragon_Is_Head_Moving = false
@@ -218,6 +218,12 @@ function DragonMoveHeadBottomToMiddle () {
     Dragon_Head.vy = 0
     Dragon_Is_Head_Moving = false
 }
+controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
+    if (Index < custom.getMaxFrameIndex(assets.animation`N_Down_Middle`)) {
+        Index += 1
+        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
+    }
+})
 let Segment1: Sprite = null
 let PP: StatusBarSprite = null
 let Dragon_Body: Sprite = null
