@@ -1,7 +1,7 @@
  
 
 
-> Open this page at [https://dln-001.github.io/monstersandbox/](https://dln-001.github.io/monstersandbox/)
+> Open this page at [https://dln-002.github.io/colins-game2/](https://dln-002.github.io/colins-game2/)
 
 ## Use as Extension
 
@@ -10,22 +10,22 @@ This repository can be added as an **extension** in MakeCode.
 * open [https://arcade.makecode.com/](https://arcade.makecode.com/)
 * click on **New Project**
 * click on **Extensions** under the gearwheel menu
-* search for **https://github.com/dln-001/monstersandbox** and import
+* search for **https://github.com/dln-002/colins-game2** and import
 
-## Edit this project ![Build status badge](https://github.com/dln-001/monstersandbox/workflows/MakeCode/badge.svg)
+## Edit this project ![Build status badge](https://github.com/dln-002/colins-game2/workflows/MakeCode/badge.svg)
 
 To edit this repository in MakeCode.
 
 * open [https://arcade.makecode.com/](https://arcade.makecode.com/)
 * click on **Import** then click on **Import URL**
-* paste **https://github.com/dln-001/monstersandbox** and click import
+* paste **https://github.com/dln-002/colins-game2** and click import
 
 ## Blocks preview
 
 This image shows the blocks code from the last commit in master.
 This image may take a few minutes to refresh.
 
-![A rendered view of the blocks](https://github.com/dln-001/monstersandbox/raw/master/.github/makecode/blocks.png)
+![A rendered view of the blocks](https://github.com/dln-002/colins-game2/raw/master/.github/makecode/blocks.png)
 
 #### Metadata (used for search, rendering)
 
