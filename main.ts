@@ -48,14 +48,9 @@ function DragonMoveHeadTopToMiddle () {
     Dragon_Is_Head_Moving = false
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Dragon_Is_Head_Moving == false) {
-        if (Dragon_Head_Position == 1) {
-            DragonMoveHeadMiddleToTop()
-        } else {
-            if (Dragon_Head_Position == 2) {
-                DragonMoveHeadBottomToMiddle()
-            }
-        }
+    if (Dragon_Mouth_Index < custom.getMaxFrameIndex(assets.animation`Dragon_Mouth_Open`)) {
+        Dragon_Mouth_Index += 1
+        Dragon_Head.setImage(custom.getFrame(assets.animation`Dragon_Mouth_Open`, Dragon_Mouth_Index))
     }
 })
 function initializeHeroHealth () {
@@ -99,11 +94,11 @@ function DragonMoveHeadMiddleToBottom () {
     Dragon_Is_Head_Moving = false
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Dragon_Is_Mouth_Open) {
+    if (Dragon_Mouth_Index == custom.getMaxFrameIndex(assets.animation`Dragon_Mouth_Open`)) {
         Dragon_Fire2 = sprites.createProjectileFromSprite(assets.image`Fire`, Dragon_Head, -100, 0)
         Dragon_Fire2.setKind(SpriteKind.Dragon_Fire)
         Dragon_Fire2.z += -100
-        Dragon_Fire2.y += 4
+        Dragon_Fire2.y += 3.5
         Dragon_Fire2.x += 4
         Dragon_Fire2.setScale(0.5, ScaleAnchor.Middle)
         for (let index = 0; index < 4; index++) {
@@ -136,9 +131,9 @@ function DragonMoveHeadMiddleToTop () {
     Dragon_Is_Head_Moving = false
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Index < custom.getMaxFrameIndex(assets.animation`N_Down_Middle`)) {
-        Index += 1
-        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
+    if (Dragon_Neck_Index < custom.getMaxFrameIndex(assets.animation`N_Down_Middle`)) {
+        Dragon_Neck_Index += 1
+        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Dragon_Neck_Index))
         Dragon_Head.x += -8 / 33
         Dragon_Head.y += 36 / 33
     }
@@ -169,9 +164,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Dragon_Fire, function (sprite, o
     sprite.startEffect(effects.fire, 500)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Index > 0) {
-        Index += -1
-        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
+    if (Dragon_Neck_Index > 0) {
+        Dragon_Neck_Index += -1
+        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Dragon_Neck_Index))
         Dragon_Head.x += 8 / 33
         Dragon_Head.y += -36 / 33
     }
@@ -204,14 +199,9 @@ function test () {
     Segment4.y += 4
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Dragon_Is_Head_Moving == false) {
-        if (Dragon_Head_Position == 0) {
-            DragonMoveHeadTopToMiddle()
-        } else {
-            if (Dragon_Head_Position == 1) {
-                DragonMoveHeadMiddleToBottom()
-            }
-        }
+    if (Dragon_Mouth_Index > 0) {
+        Dragon_Mouth_Index += -1
+        Dragon_Head.setImage(custom.getFrame(assets.animation`Dragon_Mouth_Open`, Dragon_Mouth_Index))
     }
 })
 function DragonMoveHeadBottomToMiddle () {
@@ -248,8 +238,10 @@ let HeroImageForwardCrouch: Image = null
 let HeroImageForward: Image = null
 let HeroImageBackward: Image = null
 let Hero: Sprite = null
-let Index = 0
-Index = 0
+let Dragon_Mouth_Index = 0
+let Dragon_Neck_Index = 0
+Dragon_Neck_Index = 0
+Dragon_Mouth_Index = 0
 initializeHeroVariables()
 info.setScore(0)
 scene.setBackgroundImage(assets.image`Forest`)
