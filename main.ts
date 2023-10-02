@@ -119,12 +119,6 @@ function test3 (Speed: number) {
     Segment3.setVelocity(0, Speed * 1)
     Segment2.setVelocity(0, Speed * 1)
 }
-controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
-    if (Index > 0) {
-        Index += -1
-        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
-    }
-})
 function DragonMoveHeadMiddleToTop () {
     Dragon_Is_Head_Moving = true
     Dragon_Head.vy = -10
@@ -141,6 +135,14 @@ function DragonMoveHeadMiddleToTop () {
     Dragon_Head_Position = 0
     Dragon_Is_Head_Moving = false
 }
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Index < custom.getMaxFrameIndex(assets.animation`N_Down_Middle`)) {
+        Index += 1
+        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
+        Dragon_Head.x += -8 / 33
+        Dragon_Head.y += 36 / 33
+    }
+})
 function test4 () {
     Dragon_Head_Position = 0
     Dragon_Is_Head_Moving = false
@@ -165,6 +167,14 @@ function test2 (Speed: number) {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Dragon_Fire, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     sprite.startEffect(effects.fire, 500)
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Index > 0) {
+        Index += -1
+        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
+        Dragon_Head.x += 8 / 33
+        Dragon_Head.y += -36 / 33
+    }
 })
 function initializeHeroPower () {
     PP = statusbars.create(4, 20, StatusBarKind.Magic)
@@ -218,12 +228,6 @@ function DragonMoveHeadBottomToMiddle () {
     Dragon_Head.vy = 0
     Dragon_Is_Head_Moving = false
 }
-controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
-    if (Index < custom.getMaxFrameIndex(assets.animation`N_Down_Middle`)) {
-        Index += 1
-        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Index))
-    }
-})
 let Segment1: Sprite = null
 let PP: StatusBarSprite = null
 let Dragon_Body: Sprite = null
@@ -256,8 +260,3 @@ initializeHeroPower()
 test4()
 scene.cameraFollowSprite(Hero)
 Hero.ay = 500
-forever(function () {
-    if (HP.value == 0) {
-        game.gameOver(false)
-    }
-})
