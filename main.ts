@@ -152,6 +152,12 @@ function test4 () {
     tiles.placeOnTile(Dragon_Body, tiles.getTileLocation(11, 13))
     Dragon_Body.x += 4
     Dragon_Body.y += -8
+    Dragon_Leg_Front1 = sprites.create(assets.image`Seg_4`, SpriteKind.Test)
+    tiles.placeOnTile(Dragon_Leg_Front1, tiles.getTileLocation(9, 14))
+    Dragon_Leg_Front1.y += -5
+    Dragon_Leg_Back1 = sprites.create(assets.image`Seg_0`, SpriteKind.Test)
+    tiles.placeOnTile(Dragon_Leg_Back1, tiles.getTileLocation(12, 14))
+    Dragon_Leg_Back1.y += -5
 }
 function test2 (Speed: number) {
     Segment2.setVelocity(0, Speed)
@@ -220,6 +226,8 @@ function DragonMoveHeadBottomToMiddle () {
 }
 let Segment1: Sprite = null
 let PP: StatusBarSprite = null
+let Dragon_Leg_Back1: Sprite = null
+let Dragon_Leg_Front1: Sprite = null
 let Dragon_Body: Sprite = null
 let Segment2: Sprite = null
 let Segment3: Sprite = null
@@ -246,7 +254,7 @@ initializeHeroVariables()
 info.setScore(0)
 scene.setBackgroundImage(assets.image`Forest`)
 tiles.setCurrentTilemap(tilemap`level1`)
-tiles.placeOnTile(Hero, tiles.getTileLocation(2, 13))
+tiles.placeOnTile(Hero, tiles.getTileLocation(10, 13))
 initializeHeroHealth()
 initializeHeroPower()
 test4()
