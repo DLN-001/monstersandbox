@@ -131,12 +131,19 @@ function DragonMoveHeadMiddleToTop () {
     Dragon_Is_Head_Moving = false
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Dragon_Neck_Index < custom.getMaxFrameIndex(assets.animation`N_Down_Middle`)) {
-        Dragon_Neck_Index += 1
-        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Dragon_Neck_Index))
-        Dragon_Head.x += -8 / 33
-        Dragon_Head.y += 36 / 33
-    }
+    moveDragonLeg(Dragon_Leg_Back1, true)
+    pause(100)
+    moveDragonLeg(Dragon_Leg_Front1, true)
+    Dragon_Body.x += -3
+    Dragon_Neck.x += -3
+    Dragon_Head.x += -3
+    pause(100)
+    moveDragonLeg(Dragon_Leg_Back2, true)
+    pause(100)
+    moveDragonLeg(Dragon_Leg_Front2, true)
+    Dragon_Body.x += -3
+    Dragon_Neck.x += -3
+    Dragon_Head.x += -3
 })
 function test4 () {
     Dragon_Head_Position = 0
@@ -158,6 +165,14 @@ function test4 () {
     Dragon_Leg_Back1 = sprites.create(assets.image`Seg_0`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Back1, tiles.getTileLocation(12, 14))
     Dragon_Leg_Back1.y += -5
+    Dragon_Leg_Front2 = sprites.create(assets.image`Seg_4`, SpriteKind.Test)
+    tiles.placeOnTile(Dragon_Leg_Front2, tiles.getTileLocation(9, 14))
+    Dragon_Leg_Front2.y += -5
+    Dragon_Leg_Front2.z += -10
+    Dragon_Leg_Back2 = sprites.create(assets.image`Seg_0`, SpriteKind.Test)
+    tiles.placeOnTile(Dragon_Leg_Back2, tiles.getTileLocation(12, 14))
+    Dragon_Leg_Back2.y += -5
+    Dragon_Leg_Back2.z += -10
 }
 function test2 (Speed: number) {
     Segment2.setVelocity(0, Speed)
@@ -170,12 +185,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Dragon_Fire, function (sprite, o
     sprite.startEffect(effects.fire, 500)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Dragon_Neck_Index > 0) {
-        Dragon_Neck_Index += -1
-        Dragon_Neck.setImage(custom.getFrame(assets.animation`N_Down_Middle`, Dragon_Neck_Index))
-        Dragon_Head.x += 8 / 33
-        Dragon_Head.y += -36 / 33
-    }
+	
 })
 function initializeHeroPower () {
     PP = statusbars.create(4, 20, StatusBarKind.Magic)
@@ -224,11 +234,26 @@ function DragonMoveHeadBottomToMiddle () {
     Dragon_Head.vy = 0
     Dragon_Is_Head_Moving = false
 }
+function moveDragonLeg (myLegSprite: Sprite, myForwardIndicator: boolean) {
+    if (myForwardIndicator) {
+        myLegSprite.y += -4
+        myLegSprite.x += -6
+        pause(100)
+        myLegSprite.y += 4
+    } else {
+        myLegSprite.y += 4
+        myLegSprite.x += 6
+        pause(100)
+        myLegSprite.y += -4
+    }
+}
 let Segment1: Sprite = null
 let PP: StatusBarSprite = null
-let Dragon_Leg_Back1: Sprite = null
-let Dragon_Leg_Front1: Sprite = null
+let Dragon_Leg_Front2: Sprite = null
+let Dragon_Leg_Back2: Sprite = null
 let Dragon_Body: Sprite = null
+let Dragon_Leg_Front1: Sprite = null
+let Dragon_Leg_Back1: Sprite = null
 let Segment2: Sprite = null
 let Segment3: Sprite = null
 let Segment4: Sprite = null
@@ -248,7 +273,6 @@ let HeroImageBackward: Image = null
 let Hero: Sprite = null
 let Dragon_Mouth_Index = 0
 let Dragon_Neck_Index = 0
-Dragon_Neck_Index = 0
 Dragon_Mouth_Index = 0
 initializeHeroVariables()
 info.setScore(0)
