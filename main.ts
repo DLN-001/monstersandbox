@@ -43,14 +43,15 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 function test4 () {
     Dragon_Neck = sprites.create(assets.image`Dragon_Neck`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Neck, tiles.getTileLocation(8, 12))
+    Dragon_Neck.y += 2
     Dragon_Head = sprites.create(assets.image`Dragon_Head`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Head, tiles.getTileLocation(6, 10))
     Dragon_Head.x += 10
-    Dragon_Head.y += 18
+    Dragon_Head.y += 20
     Dragon_Body = sprites.create(assets.image`Dragon_Body`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Body, tiles.getTileLocation(11, 13))
     Dragon_Body.x += 4
-    Dragon_Body.y += -8
+    Dragon_Body.y += -6
     Dragon_Leg_Front1 = sprites.create(assets.image`Seg_4`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Front1, tiles.getTileLocation(9, 14))
     Dragon_Leg_Front1.y += -5
@@ -65,6 +66,10 @@ function test4 () {
     tiles.placeOnTile(Dragon_Leg_Back2, tiles.getTileLocation(12, 14))
     Dragon_Leg_Back2.y += -5
     Dragon_Leg_Back2.z += -10
+    Dragon_Wing_Front = sprites.create(assets.image`Dragon_Body0`, SpriteKind.Test)
+    tiles.placeOnTile(Dragon_Wing_Front, tiles.getTileLocation(11, 11))
+    Dragon_Wing_Front.y += 10
+    Dragon_Wing_Front.x += -9
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Dragon_Fire_Kind, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
@@ -132,6 +137,7 @@ function shootDragonFire () {
 }
 let Dragon_Fire: Sprite = null
 let PP: StatusBarSprite = null
+let Dragon_Wing_Front: Sprite = null
 let Dragon_Body: Sprite = null
 let Dragon_Neck: Sprite = null
 let Dragon_Leg_Front2: Sprite = null
