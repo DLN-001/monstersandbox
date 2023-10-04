@@ -18,50 +18,16 @@ function initializeHeroVariables () {
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (IsMovingDragonHead) {
-        if (Dragon_Mouth_Index < custom.getMaxFrameIndex(assets.animation`a`)) {
+        if (Dragon_Mouth_Index < custom.getMaxFrameIndex(assets.animation`Dragon_Head`)) {
             Dragon_Mouth_Index += 1
-            Dragon_Head.setImage(custom.getFrame([img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `], Dragon_Mouth_Index))
+            Dragon_Head.setImage(custom.getFrame(assets.animation`Dragon_Head`, Dragon_Mouth_Index))
         }
     } else {
         if (Dragon_Neck_Index > 0) {
             Dragon_Neck_Index += -1
-            Dragon_Neck.setImage(custom.getFrame([img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `], Dragon_Neck_Index))
+            Dragon_Neck.setImage(custom.getFrame(assets.animation`Dragon_Neck`, Dragon_Neck_Index))
             Dragon_Head.x += 8 / 33
-            Dragon_Head.y += -36 / 33
+            Dragon_Head.y += -30 / 33
         }
     }
 })
@@ -86,11 +52,11 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 function test4 () {
     Dragon_Neck = sprites.create(custom.getFrame(assets.animation`Dragon_Neck`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Neck, tiles.getTileLocation(8, 12))
-    Dragon_Neck.y += 4
+    Dragon_Neck.y += 8
     Dragon_Head = sprites.create(custom.getFrame(assets.animation`Dragon_Head`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Head, tiles.getTileLocation(6, 10))
     Dragon_Head.x += 10
-    Dragon_Head.y += 20
+    Dragon_Head.y += 24
     Dragon_Body = sprites.create(assets.image`Dragon_Body`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Body, tiles.getTileLocation(11, 13))
     Dragon_Body.x += 4
@@ -134,65 +100,14 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (IsMovingDragonHead) {
         if (Dragon_Mouth_Index > 0) {
             Dragon_Mouth_Index += -1
-            Dragon_Head.setImage(custom.getFrame([img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `], Dragon_Mouth_Index))
+            Dragon_Head.setImage(custom.getFrame(assets.animation`Dragon_Head`, Dragon_Mouth_Index))
         }
     } else {
-        if (Dragon_Neck_Index < custom.getMaxFrameIndex([img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `])) {
+        if (Dragon_Neck_Index < custom.getMaxFrameIndex(assets.animation`Dragon_Neck`)) {
             Dragon_Neck_Index += 1
-            Dragon_Neck.setImage(custom.getFrame([img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `], Dragon_Neck_Index))
+            Dragon_Neck.setImage(custom.getFrame(assets.animation`Dragon_Neck`, Dragon_Neck_Index))
             Dragon_Head.x += -8 / 33
-            Dragon_Head.y += 36 / 33
+            Dragon_Head.y += 30 / 33
         }
     }
 })
@@ -226,24 +141,7 @@ function moveDragonLeg (myLegSprite: Sprite, myForwardIndicator: boolean) {
     }
 }
 function shootDragonFire () {
-    if (Dragon_Mouth_Index == custom.getMaxFrameIndex([img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `])) {
+    if (Dragon_Mouth_Index == custom.getMaxFrameIndex(assets.animation`Dragon_Head`)) {
         Dragon_Fire = sprites.createProjectileFromSprite(assets.image`Fire`, Dragon_Head, -100, 0)
         Dragon_Fire.setKind(SpriteKind.Dragon_Fire_Kind)
         Dragon_Fire.z += -100
