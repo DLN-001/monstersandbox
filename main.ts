@@ -59,7 +59,7 @@ function test4 () {
     Dragon_Head.y += 24
     Dragon_Body = sprites.create(assets.image`Dragon_Body`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Body, tiles.getTileLocation(11, 13))
-    Dragon_Body.x += 4
+    Dragon_Body.x += 0
     Dragon_Body.y += -6
     Dragon_Leg_Front1 = sprites.create(assets.image`Dragon_Leg_Front`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Front1, tiles.getTileLocation(9, 14))
