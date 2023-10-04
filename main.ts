@@ -17,9 +17,52 @@ function initializeHeroVariables () {
     Hero = sprites.create(HeroImageForward, SpriteKind.Player)
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Dragon_Mouth_Index < custom.getMaxFrameIndex(assets.animation`Dragon_Mouth_Open`)) {
-        Dragon_Mouth_Index += 1
-        Dragon_Head.setImage(custom.getFrame(assets.animation`Dragon_Mouth_Open`, Dragon_Mouth_Index))
+    if (IsMovingDragonHead) {
+        if (Dragon_Mouth_Index < custom.getMaxFrameIndex(assets.animation`a`)) {
+            Dragon_Mouth_Index += 1
+            Dragon_Head.setImage(custom.getFrame([img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `], Dragon_Mouth_Index))
+        }
+    } else {
+        if (Dragon_Neck_Index > 0) {
+            Dragon_Neck_Index += -1
+            Dragon_Neck.setImage(custom.getFrame([img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `], Dragon_Neck_Index))
+            Dragon_Head.x += 8 / 33
+            Dragon_Head.y += -36 / 33
+        }
     }
 })
 function initializeHeroHealth () {
@@ -30,7 +73,7 @@ function initializeHeroHealth () {
     HP.setColor(7, 2)
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-	
+    IsMovingDragonHead = !(IsMovingDragonHead)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     shootDragonFire()
@@ -41,10 +84,10 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     moveDragonLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, true)
 })
 function test4 () {
-    Dragon_Neck = sprites.create(assets.image`Dragon_Neck`, SpriteKind.Test)
+    Dragon_Neck = sprites.create(custom.getFrame(assets.animation`Dragon_Neck`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Neck, tiles.getTileLocation(8, 12))
-    Dragon_Neck.y += 2
-    Dragon_Head = sprites.create(assets.image`Dragon_Head`, SpriteKind.Test)
+    Dragon_Neck.y += 4
+    Dragon_Head = sprites.create(custom.getFrame(assets.animation`Dragon_Head`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Head, tiles.getTileLocation(6, 10))
     Dragon_Head.x += 10
     Dragon_Head.y += 20
@@ -52,21 +95,21 @@ function test4 () {
     tiles.placeOnTile(Dragon_Body, tiles.getTileLocation(11, 13))
     Dragon_Body.x += 4
     Dragon_Body.y += -6
-    Dragon_Leg_Front1 = sprites.create(assets.image`Seg_4`, SpriteKind.Test)
+    Dragon_Leg_Front1 = sprites.create(assets.image`Dragon_Leg_Front`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Front1, tiles.getTileLocation(9, 14))
     Dragon_Leg_Front1.y += -5
-    Dragon_Leg_Back1 = sprites.create(assets.image`Seg_0`, SpriteKind.Test)
+    Dragon_Leg_Back1 = sprites.create(assets.image`Dragon_Leg_Back`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Back1, tiles.getTileLocation(12, 14))
     Dragon_Leg_Back1.y += -5
-    Dragon_Leg_Front2 = sprites.create(assets.image`Seg_4`, SpriteKind.Test)
+    Dragon_Leg_Front2 = sprites.create(assets.image`Dragon_Leg_Front`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Front2, tiles.getTileLocation(9, 14))
     Dragon_Leg_Front2.y += -5
     Dragon_Leg_Front2.z += -10
-    Dragon_Leg_Back2 = sprites.create(assets.image`Seg_0`, SpriteKind.Test)
+    Dragon_Leg_Back2 = sprites.create(assets.image`Dragon_Leg_Back`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Back2, tiles.getTileLocation(12, 14))
     Dragon_Leg_Back2.y += -5
     Dragon_Leg_Back2.z += -10
-    Dragon_Wing_Front = sprites.create(assets.image`Dragon_Body0`, SpriteKind.Test)
+    Dragon_Wing_Front = sprites.create(assets.image`Dragon_Wing`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Wing_Front, tiles.getTileLocation(11, 11))
     Dragon_Wing_Front.y += 10
     Dragon_Wing_Front.x += -9
@@ -88,9 +131,69 @@ function initializeHeroPower () {
     PP.setColor(8, 15)
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Dragon_Mouth_Index > 0) {
-        Dragon_Mouth_Index += -1
-        Dragon_Head.setImage(custom.getFrame(assets.animation`Dragon_Mouth_Open`, Dragon_Mouth_Index))
+    if (IsMovingDragonHead) {
+        if (Dragon_Mouth_Index > 0) {
+            Dragon_Mouth_Index += -1
+            Dragon_Head.setImage(custom.getFrame([img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `], Dragon_Mouth_Index))
+        }
+    } else {
+        if (Dragon_Neck_Index < custom.getMaxFrameIndex([img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `])) {
+            Dragon_Neck_Index += 1
+            Dragon_Neck.setImage(custom.getFrame([img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `], Dragon_Neck_Index))
+            Dragon_Head.x += -8 / 33
+            Dragon_Head.y += 36 / 33
+        }
     }
 })
 function moveDragonLegPair (myFirstLegSprite: Sprite, mySecondLegSprite: Sprite, myForwardIndicator: boolean) {
@@ -123,7 +226,24 @@ function moveDragonLeg (myLegSprite: Sprite, myForwardIndicator: boolean) {
     }
 }
 function shootDragonFire () {
-    if (Dragon_Mouth_Index == custom.getMaxFrameIndex(assets.animation`Dragon_Mouth_Open`)) {
+    if (Dragon_Mouth_Index == custom.getMaxFrameIndex([img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `])) {
         Dragon_Fire = sprites.createProjectileFromSprite(assets.image`Fire`, Dragon_Head, -100, 0)
         Dragon_Fire.setKind(SpriteKind.Dragon_Fire_Kind)
         Dragon_Fire.z += -100
@@ -141,12 +261,12 @@ let Dragon_Fire: Sprite = null
 let PP: StatusBarSprite = null
 let Dragon_Wing_Front: Sprite = null
 let Dragon_Body: Sprite = null
-let Dragon_Neck: Sprite = null
 let Dragon_Leg_Front2: Sprite = null
 let Dragon_Leg_Back2: Sprite = null
 let Dragon_Leg_Front1: Sprite = null
 let Dragon_Leg_Back1: Sprite = null
 let HP: StatusBarSprite = null
+let Dragon_Neck: Sprite = null
 let Dragon_Head: Sprite = null
 let HeroIsForward = false
 let HeroImageBackwardCrouch: Image = null
@@ -156,6 +276,9 @@ let HeroImageBackward: Image = null
 let Hero: Sprite = null
 let Dragon_Mouth_Index = 0
 let Dragon_Neck_Index = 0
+let IsMovingDragonHead = false
+IsMovingDragonHead = true
+Dragon_Neck_Index = 0
 Dragon_Mouth_Index = 0
 initializeHeroVariables()
 info.setScore(0)
