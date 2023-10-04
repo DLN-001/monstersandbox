@@ -2,7 +2,7 @@ namespace SpriteKind {
     export const Spell = SpriteKind.create()
     export const Skeleton = SpriteKind.create()
     export const Test = SpriteKind.create()
-    export const Dragon_Fire = SpriteKind.create()
+    export const Dragon_Fire_Kind = SpriteKind.create()
 }
 namespace StatusBarKind {
     export const scel_helth = StatusBarKind.create()
@@ -15,37 +15,6 @@ function initializeHeroVariables () {
     HeroImageBackwardCrouch = assets.image`WizCrouchBackward`
     HeroIsForward = true
     Hero = sprites.create(HeroImageForward, SpriteKind.Player)
-}
-function topAlign (mySprite: Sprite, mySprite2: Sprite) {
-    if (mySprite.vy < 0) {
-        if (mySprite.bottom <= mySprite2.y + 4) {
-            mySprite.setVelocity(0, 0)
-            mySprite.bottom = mySprite2.y + 4
-        }
-    } else {
-        if (mySprite.vy > 0) {
-            if (mySprite.top >= mySprite2.y + -4) {
-                mySprite.setVelocity(0, 0)
-                mySprite.top = mySprite2.y + -4
-            }
-        }
-    }
-}
-function DragonMoveHeadTopToMiddle () {
-    Dragon_Is_Head_Moving = true
-    Dragon_Head.setVelocity(-5, 10)
-    animation.runImageAnimation(
-    Dragon_Neck,
-    assets.animation`N_Down_Middle`,
-    100,
-    false
-    )
-    pause(1700)
-    Dragon_Head.vx = 0
-    pause(300)
-    Dragon_Head.vy = 0
-    Dragon_Head_Position = 1
-    Dragon_Is_Head_Moving = false
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Dragon_Mouth_Index < custom.getMaxFrameIndex(assets.animation`Dragon_Mouth_Open`)) {
@@ -61,94 +30,17 @@ function initializeHeroHealth () {
     HP.setColor(7, 2)
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Dragon_Is_Mouth_Open) {
-        animation.runImageAnimation(
-        Dragon_Head,
-        assets.animation`Dragon_Mouth_Closed`,
-        100,
-        false
-        )
-        Dragon_Is_Mouth_Open = false
-    } else {
-        animation.runImageAnimation(
-        Dragon_Head,
-        assets.animation`Dragon_Mouth_Open`,
-        100,
-        false
-        )
-        Dragon_Is_Mouth_Open = true
-    }
+	
 })
-function DragonMoveHeadMiddleToBottom () {
-    Dragon_Is_Head_Moving = true
-    Dragon_Head_Position = 2
-    Dragon_Head.vy = 10
-    animation.runImageAnimation(
-    Dragon_Neck,
-    assets.animation`N_Down_Bottom`,
-    100,
-    false
-    )
-    pause(1700)
-    Dragon_Head.vy = 0
-    Dragon_Is_Head_Moving = false
-}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Dragon_Mouth_Index == custom.getMaxFrameIndex(assets.animation`Dragon_Mouth_Open`)) {
-        Dragon_Fire2 = sprites.createProjectileFromSprite(assets.image`Fire`, Dragon_Head, -100, 0)
-        Dragon_Fire2.setKind(SpriteKind.Dragon_Fire)
-        Dragon_Fire2.z += -100
-        Dragon_Fire2.y += 3.5
-        Dragon_Fire2.x += 4
-        Dragon_Fire2.setScale(0.5, ScaleAnchor.Middle)
-        for (let index = 0; index < 4; index++) {
-            pause(50)
-            Dragon_Fire2.changeScale(0.125, ScaleAnchor.Middle)
-            Dragon_Fire2.vx += -12.5
-        }
-    }
+    shootDragonFire()
 })
-function test3 (Speed: number) {
-    Segment5.setVelocity(0, Speed)
-    Segment4.setVelocity(0, Speed * 1)
-    Segment3.setVelocity(0, Speed * 1)
-    Segment2.setVelocity(0, Speed * 1)
-}
-function DragonMoveHeadMiddleToTop () {
-    Dragon_Is_Head_Moving = true
-    Dragon_Head.vy = -10
-    pause(300)
-    Dragon_Head.vx = 5
-    animation.runImageAnimation(
-    Dragon_Neck,
-    assets.animation`N_Up_Top`,
-    100,
-    false
-    )
-    pause(1700)
-    Dragon_Head.setVelocity(0, 0)
-    Dragon_Head_Position = 0
-    Dragon_Is_Head_Moving = false
-}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    moveDragonLeg(Dragon_Leg_Back1, true)
+    moveDragonLegPair(Dragon_Leg_Back1, Dragon_Leg_Front1, true)
     pause(100)
-    moveDragonLeg(Dragon_Leg_Front1, true)
-    Dragon_Body.x += -3
-    Dragon_Neck.x += -3
-    Dragon_Head.x += -3
-    pause(100)
-    moveDragonLeg(Dragon_Leg_Back2, true)
-    pause(100)
-    moveDragonLeg(Dragon_Leg_Front2, true)
-    Dragon_Body.x += -3
-    Dragon_Neck.x += -3
-    Dragon_Head.x += -3
+    moveDragonLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, true)
 })
 function test4 () {
-    Dragon_Head_Position = 0
-    Dragon_Is_Head_Moving = false
-    Dragon_Is_Mouth_Open = false
     Dragon_Neck = sprites.create(assets.image`Dragon_Neck`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Neck, tiles.getTileLocation(8, 12))
     Dragon_Head = sprites.create(assets.image`Dragon_Head`, SpriteKind.Test)
@@ -174,18 +66,14 @@ function test4 () {
     Dragon_Leg_Back2.y += -5
     Dragon_Leg_Back2.z += -10
 }
-function test2 (Speed: number) {
-    Segment2.setVelocity(0, Speed)
-    Segment3.setVelocity(0, Speed * 1.25)
-    Segment4.setVelocity(0, Speed * 1.5)
-    Segment5.setVelocity(0, Speed * 1.75)
-}
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Dragon_Fire, function (sprite, otherSprite) {
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Dragon_Fire_Kind, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     sprite.startEffect(effects.fire, 500)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-	
+    moveDragonLegPair(Dragon_Leg_Back1, Dragon_Leg_Front1, false)
+    pause(100)
+    moveDragonLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, false)
 })
 function initializeHeroPower () {
     PP = statusbars.create(4, 20, StatusBarKind.Magic)
@@ -194,45 +82,25 @@ function initializeHeroPower () {
     PP.value = 50
     PP.setColor(8, 15)
 }
-function test () {
-    Segment1 = sprites.create(assets.image`Segment_1`, SpriteKind.Test)
-    Segment2 = sprites.create(assets.image`Segment_1`, SpriteKind.Test)
-    Segment3 = sprites.create(assets.image`Segment_1`, SpriteKind.Test)
-    Segment4 = sprites.create(assets.image`Segment_1`, SpriteKind.Test)
-    Segment5 = sprites.create(assets.image`Segment_1`, SpriteKind.Test)
-    tiles.placeOnTile(Segment1, tiles.getTileLocation(8, 12))
-    tiles.placeOnTile(Segment2, tiles.getTileLocation(8, 12))
-    tiles.placeOnTile(Segment3, tiles.getTileLocation(8, 12))
-    tiles.placeOnTile(Segment4, tiles.getTileLocation(8, 12))
-    tiles.placeOnTile(Segment5, tiles.getTileLocation(8, 12))
-    Segment1.x += 16
-    Segment1.y += 16
-    Segment2.x += 12
-    Segment2.y += 12
-    Segment3.x += 8
-    Segment3.y += 8
-    Segment4.x += 4
-    Segment4.y += 4
-}
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Dragon_Mouth_Index > 0) {
         Dragon_Mouth_Index += -1
         Dragon_Head.setImage(custom.getFrame(assets.animation`Dragon_Mouth_Open`, Dragon_Mouth_Index))
     }
 })
-function DragonMoveHeadBottomToMiddle () {
-    Dragon_Is_Head_Moving = true
-    Dragon_Head_Position = 1
-    Dragon_Head.vy = -10
-    animation.runImageAnimation(
-    Dragon_Neck,
-    assets.animation`N_Up_Middle`,
-    100,
-    false
-    )
-    pause(1700)
-    Dragon_Head.vy = 0
-    Dragon_Is_Head_Moving = false
+function moveDragonLegPair (myFirstLegSprite: Sprite, mySecondLegSprite: Sprite, myForwardIndicator: boolean) {
+    moveDragonLeg(myFirstLegSprite, myForwardIndicator)
+    pause(100)
+    moveDragonLeg(mySecondLegSprite, myForwardIndicator)
+    if (myForwardIndicator) {
+        Dragon_Body.x += -3
+        Dragon_Neck.x += -3
+        Dragon_Head.x += -3
+    } else {
+        Dragon_Body.x += 3
+        Dragon_Neck.x += 3
+        Dragon_Head.x += 3
+    }
 }
 function moveDragonLeg (myLegSprite: Sprite, myForwardIndicator: boolean) {
     if (myForwardIndicator) {
@@ -241,30 +109,37 @@ function moveDragonLeg (myLegSprite: Sprite, myForwardIndicator: boolean) {
         pause(100)
         myLegSprite.y += 4
     } else {
-        myLegSprite.y += 4
+        myLegSprite.y += -4
         myLegSprite.x += 6
         pause(100)
-        myLegSprite.y += -4
+        myLegSprite.y += 4
     }
 }
-let Segment1: Sprite = null
+function shootDragonFire () {
+    if (Dragon_Mouth_Index == custom.getMaxFrameIndex(assets.animation`Dragon_Mouth_Open`)) {
+        Dragon_Fire = sprites.createProjectileFromSprite(assets.image`Fire`, Dragon_Head, -100, 0)
+        Dragon_Fire.setKind(SpriteKind.Dragon_Fire_Kind)
+        Dragon_Fire.z += -100
+        Dragon_Fire.y += 3.5
+        Dragon_Fire.x += 4
+        Dragon_Fire.setScale(0.5, ScaleAnchor.Middle)
+        for (let index = 0; index < 4; index++) {
+            pause(50)
+            Dragon_Fire.changeScale(0.125, ScaleAnchor.Middle)
+            Dragon_Fire.vx += -12.5
+        }
+    }
+}
+let Dragon_Fire: Sprite = null
 let PP: StatusBarSprite = null
+let Dragon_Body: Sprite = null
+let Dragon_Neck: Sprite = null
 let Dragon_Leg_Front2: Sprite = null
 let Dragon_Leg_Back2: Sprite = null
-let Dragon_Body: Sprite = null
 let Dragon_Leg_Front1: Sprite = null
 let Dragon_Leg_Back1: Sprite = null
-let Segment2: Sprite = null
-let Segment3: Sprite = null
-let Segment4: Sprite = null
-let Segment5: Sprite = null
-let Dragon_Fire2: Sprite = null
-let Dragon_Is_Mouth_Open = false
 let HP: StatusBarSprite = null
-let Dragon_Head_Position = 0
-let Dragon_Neck: Sprite = null
 let Dragon_Head: Sprite = null
-let Dragon_Is_Head_Moving = false
 let HeroIsForward = false
 let HeroImageBackwardCrouch: Image = null
 let HeroImageForwardCrouch: Image = null
