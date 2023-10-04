@@ -101,10 +101,12 @@ function moveDragonLegPair (myFirstLegSprite: Sprite, mySecondLegSprite: Sprite,
         Dragon_Body.x += -3
         Dragon_Neck.x += -3
         Dragon_Head.x += -3
+        Dragon_Wing_Front.x += -3
     } else {
         Dragon_Body.x += 3
         Dragon_Neck.x += 3
         Dragon_Head.x += 3
+        Dragon_Wing_Front.x += 3
     }
 }
 function moveDragonLeg (myLegSprite: Sprite, myForwardIndicator: boolean) {
