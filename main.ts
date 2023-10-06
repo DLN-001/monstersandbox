@@ -178,6 +178,7 @@ let IsMovingDragonHead = false
 IsMovingDragonHead = true
 Dragon_Neck_Index = 0
 Dragon_Mouth_Index = 0
+let Dragon_Wing_Index = 0
 initializeHeroVariables()
 info.setScore(0)
 scene.setBackgroundImage(assets.image`Forest`)
