@@ -40,6 +40,14 @@ function initializeHeroHealth () {
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     IsMovingDragonHead = !(IsMovingDragonHead)
+    for (let index = 0; index <= custom.getMaxFrameIndex(assets.animation`Dragon_Wing_Flap`); index++) {
+        Dragon_Wing_Front.setImage(custom.getFrame(assets.animation`Dragon_Wing_Flap`, index))
+        pause(10)
+    }
+    for (let index = 0; index <= custom.getMaxFrameIndex(assets.animation`Dragon_Wing_Flap`); index++) {
+        Dragon_Wing_Front.setImage(custom.getFrame(assets.animation`Dragon_Wing_Flap`, custom.getMaxFrameIndex(assets.animation`Dragon_Wing_Flap`) - index))
+        pause(10)
+    }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     shootDragonFire()
@@ -157,12 +165,12 @@ function shootDragonFire () {
 }
 let Dragon_Fire: Sprite = null
 let PP: StatusBarSprite = null
-let Dragon_Wing_Front: Sprite = null
 let Dragon_Body: Sprite = null
 let Dragon_Leg_Front2: Sprite = null
 let Dragon_Leg_Back2: Sprite = null
 let Dragon_Leg_Front1: Sprite = null
 let Dragon_Leg_Back1: Sprite = null
+let Dragon_Wing_Front: Sprite = null
 let HP: StatusBarSprite = null
 let Dragon_Neck: Sprite = null
 let Dragon_Head: Sprite = null
