@@ -39,9 +39,8 @@ function initializeHeroHealth () {
     HP.setColor(7, 2)
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    moveDragonLegPair(Dragon_Leg_Back1, Dragon_Leg_Front1, true)
-    pause(100)
-    moveDragonLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, true)
+    music.setVolume(255)
+    music.play(music.createSoundEffect(WaveShape.Noise, 196, 196, 246, 255, 1000, SoundExpressionEffect.None, InterpolationCurve.Curve), music.PlaybackMode.InBackground)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     shootDragonFire()
@@ -187,13 +186,13 @@ function dragon_flag_wings () {
 let Dragon_Fire: Sprite = null
 let PP: StatusBarSprite = null
 let Dragon_Wing_Front: Sprite = null
+let Dragon_Leg_Back2: Sprite = null
+let Dragon_Leg_Back1: Sprite = null
+let Dragon_Leg_Front2: Sprite = null
+let Dragon_Leg_Front1: Sprite = null
 let Dragon_Body: Sprite = null
 let Dragon_Neck_Row = 0
 let Dragon_Neck_Col = 0
-let Dragon_Leg_Front2: Sprite = null
-let Dragon_Leg_Back2: Sprite = null
-let Dragon_Leg_Front1: Sprite = null
-let Dragon_Leg_Back1: Sprite = null
 let HP: StatusBarSprite = null
 let Dragon_Neck: Sprite = null
 let Dragon_Head: Sprite = null
