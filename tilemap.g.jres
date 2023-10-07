@@ -4,41 +4,11 @@
         "mimeType": "image/x-mkcd-f4",
         "tilemapTile": true
     },
-    "tile1": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALvMAAAAAACwVdUPAAAAAFs90/0AAAAAW1MV/QAAAABbUxX9AAAAAFsd0f0AAAAAsFXdDwAAAAAAu8wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "tilemapTile": true,
-        "displayName": "Coin"
-    },
-    "tile2": {
-        "data": "hwQQABAAAAAAcXd3d3d3dxBxd3d3d3d3EXFnd1d3d1cQcVV2d3d3dwBxV2V3d3d3AFB1d3d3d3cAcVV3d3d3dxBxd1V3d3d3EHFXZXd3dXcAcVd2d3dVdwBwd3d3V1d3AHF3d3dVdncQcXV3d2V3dxFxd3d3d3d3EHF3d3d3d3cAcXd3d3d3VQ==",
-        "mimeType": "image/x-mkcd-f4",
-        "tilemapTile": true,
-        "displayName": "myTile"
-    },
-    "tile3": {
-        "data": "hwQQABAAAAAiIiIiIiIiIiKIiIiIiIgigoiIiIiIiCiCiIiIiIiIKIKIiIgiiIgogoiIiCiCiCiCiIiIiCKIKIKIIiIiIoIogogiIiIigiiCiIiIiCKIKIKIiIgogogogoiIiCKIiCiCiIiIiIiIKIKIiIiIiIgoIoiIiIiIiCIiIiIiIiIiIg==",
-        "mimeType": "image/x-mkcd-f4",
-        "tilemapTile": true,
-        "displayName": "myTile0"
-    },
     "tile4": {
         "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAiAAAAAAAAICICAAAAAAAgIiIAAAAAAAAgIgIAAAAAACAiAgAAAAAgIiIAAAAAACAiAgAAAAAAICIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
         "mimeType": "image/x-mkcd-f4",
         "tilemapTile": true,
         "displayName": "myTile1"
-    },
-    "tile5": {
-        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAABEAABH/////EQAAES8i//8RAAARLyLy/xEAABEvIiL/EQAAEf8vIvIRAAAR/y8i8hEAABEvIiL/EQAAES8i8v8RAAARLyL//xEAABH/////EQAAEQAAAAARAAAAAAAAAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "tilemapTile": true,
-        "displayName": "myTile2"
-    },
-    "tile6": {
-        "data": "hwQQABAAAAAiIiIiIiIiIiKIiIiIiIgigoiIiIiIiCiCiIiIiIiIKIKIiCiCiIgogoiIKIKIiCiCiIgogoiIKIKIiCiCiIgogoiCKIIoiCiCiCIogiKIKIKIKCIigogogoiIIiKIiCiCiIgogoiIKIKIiIiIiIgoIoiIiIiIiCIiIiIiIiIiIg==",
-        "mimeType": "image/x-mkcd-f4",
-        "tilemapTile": true,
-        "displayName": "myTile3"
     },
     "level1": {
         "id": "level1",

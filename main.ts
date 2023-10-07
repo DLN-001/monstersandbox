@@ -40,10 +40,35 @@ function initializeHeroHealth () {
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     music.setVolume(255)
+    for (let index = 0; index < 4; index++) {
+        moveDragonLegPair(Dragon_Leg_Back1, Dragon_Leg_Front1, true)
+        pause(100)
+        moveDragonLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, true)
+        pause(100)
+    }
+    pause(500)
     music.play(music.createSoundEffect(WaveShape.Noise, 196, 196, 246, 255, 1000, SoundExpressionEffect.None, InterpolationCurve.Curve), music.PlaybackMode.InBackground)
+    scene.cameraShake(4, 1500)
+    for (let index = 0; index <= custom.getMaxFrameIndex(assets.animation`Dragon_Head`); index++) {
+        Dragon_Head.setImage(custom.getFrame(assets.animation`Dragon_Head`, index))
+        pause(10)
+    }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    shootDragonFire()
+    music.setVolume(255)
+    for (let index = 0; index < 4; index++) {
+        moveDragonLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, false)
+        pause(100)
+        moveDragonLegPair(Dragon_Leg_Back1, Dragon_Leg_Front1, false)
+        pause(100)
+    }
+    pause(500)
+    music.play(music.createSoundEffect(WaveShape.Noise, 196, 196, 246, 255, 1000, SoundExpressionEffect.None, InterpolationCurve.Curve), music.PlaybackMode.InBackground)
+    scene.cameraShake(4, 1500)
+    for (let index = 0; index <= custom.getMaxFrameIndex(assets.animation`Dragon_Head`); index++) {
+        Dragon_Head.setImage(custom.getFrame(assets.animation`Dragon_Head`, index))
+        pause(10)
+    }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     HeroIsForward = false
@@ -80,7 +105,7 @@ function test4 () {
     tiles.placeOnTile(Dragon_Leg_Back2, tiles.getTileLocation(Dragon_Neck_Col + 4, Dragon_Neck_Row + 2))
     Dragon_Leg_Back2.y += -5
     Dragon_Leg_Back2.z += -10
-    Dragon_Wing_Front = sprites.create(assets.image`Dragon_Wing`, SpriteKind.Test)
+    Dragon_Wing_Front = sprites.create(custom.getFrame(assets.animation`Dragon_Wing_Flap`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Wing_Front, tiles.getTileLocation(Dragon_Neck_Col + 3, Dragon_Neck_Row - 1))
     Dragon_Wing_Front.y += 10
     Dragon_Wing_Front.x += -9
@@ -130,30 +155,20 @@ function moveDragonLegPair (myFirstLegSprite: Sprite, mySecondLegSprite: Sprite,
     moveDragonLeg(mySecondLegSprite, myForwardIndicator)
     scene.cameraShake(2, 100)
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
-    if (myForwardIndicator) {
-        Dragon_Body.x += -6
-        Dragon_Neck.x += -6
-        Dragon_Head.x += -6
-        Dragon_Wing_Front.x += -6
-    } else {
-        Dragon_Body.x += 6
-        Dragon_Neck.x += 6
-        Dragon_Head.x += 6
-        Dragon_Wing_Front.x += 6
-    }
 }
 function moveDragonLeg (myLegSprite: Sprite, myForwardIndicator: boolean) {
+    Dragon_Leg_Step_X = 18
     if (myForwardIndicator) {
-        myLegSprite.y += -4
-        myLegSprite.x += -12
-        pause(100)
-        myLegSprite.y += 4
-    } else {
-        myLegSprite.y += -4
-        myLegSprite.x += 12
-        pause(100)
-        myLegSprite.y += 4
+        Dragon_Leg_Step_X = Dragon_Leg_Step_X * -1
     }
+    myLegSprite.y += -4
+    myLegSprite.x += Dragon_Leg_Step_X
+    Dragon_Body.x += Dragon_Leg_Step_X / 4
+    Dragon_Neck.x += Dragon_Leg_Step_X / 4
+    Dragon_Head.x += Dragon_Leg_Step_X / 4
+    Dragon_Wing_Front.x += Dragon_Leg_Step_X / 4
+    pause(100)
+    myLegSprite.y += 4
     pause(10)
 }
 function shootDragonFire () {
@@ -184,15 +199,16 @@ function dragon_flag_wings () {
     Hero.ax = 0
 }
 let Dragon_Fire: Sprite = null
+let Dragon_Leg_Step_X = 0
 let PP: StatusBarSprite = null
 let Dragon_Wing_Front: Sprite = null
-let Dragon_Leg_Back2: Sprite = null
-let Dragon_Leg_Back1: Sprite = null
-let Dragon_Leg_Front2: Sprite = null
-let Dragon_Leg_Front1: Sprite = null
 let Dragon_Body: Sprite = null
 let Dragon_Neck_Row = 0
 let Dragon_Neck_Col = 0
+let Dragon_Leg_Front2: Sprite = null
+let Dragon_Leg_Back2: Sprite = null
+let Dragon_Leg_Front1: Sprite = null
+let Dragon_Leg_Back1: Sprite = null
 let HP: StatusBarSprite = null
 let Dragon_Neck: Sprite = null
 let Dragon_Head: Sprite = null
@@ -221,9 +237,6 @@ initializeHeroPower()
 test4()
 Hero.ay = 500
 controller.moveSprite(Hero, 100, 0)
-game.onUpdate(function () {
-	
-})
 forever(function () {
     info.setScore(HeroCameraXOffset)
 })
