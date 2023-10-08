@@ -28,6 +28,10 @@ function dragonCreate () {
     tiles.placeOnTile(Dragon_Body, tiles.getTileLocation(Dragon_Neck_Col + 3, Dragon_Neck_Row + 1))
     Dragon_Body.x += -6
     Dragon_Body.y += -6
+    DragonTail = sprites.create(assets.image`Dragon_Body0`, SpriteKind.Test)
+    tiles.placeOnTile(DragonTail, tiles.getTileLocation(Dragon_Neck_Col + 7, Dragon_Neck_Row + 2))
+    DragonTail.x += -6
+    DragonTail.y += -2
     Dragon_Leg_Front1 = sprites.create(assets.image`Dragon_Leg_Front`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Front1, tiles.getTileLocation(Dragon_Neck_Col + 1, Dragon_Neck_Row + 2))
     Dragon_Leg_Front1.y += -5
@@ -207,6 +211,7 @@ let Dragon_Leg_Back2: Sprite = null
 let Dragon_Leg_Back1: Sprite = null
 let Dragon_Leg_Front2: Sprite = null
 let Dragon_Leg_Front1: Sprite = null
+let DragonTail: Sprite = null
 let Dragon_Body: Sprite = null
 let Dragon_Head: Sprite = null
 let Dragon_Neck: Sprite = null
