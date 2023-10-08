@@ -11,8 +11,6 @@ namespace StatusBarKind {
 function initializeHeroVariables () {
     HeroImageBackward = assets.image`WizBackward`
     HeroImageForward = assets.image`WizForward`
-    HeroImageForwardCrouch = assets.image`WizCrouchForward`
-    HeroImageBackwardCrouch = assets.image`WizCrouchBackward`
     HeroIsForward = true
     Hero = sprites.create(HeroImageForward, SpriteKind.Player)
 }
@@ -28,7 +26,7 @@ function dragonCreate () {
     Dragon_Head.y += 24
     Dragon_Body = sprites.create(assets.image`Dragon_Body`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Body, tiles.getTileLocation(Dragon_Neck_Col + 3, Dragon_Neck_Row + 1))
-    Dragon_Body.x += 0
+    Dragon_Body.x += -6
     Dragon_Body.y += -6
     Dragon_Leg_Front1 = sprites.create(assets.image`Dragon_Leg_Front`, SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Front1, tiles.getTileLocation(Dragon_Neck_Col + 1, Dragon_Neck_Row + 2))
@@ -215,8 +213,6 @@ let Dragon_Neck: Sprite = null
 let Dragon_Neck_Row = 0
 let Dragon_Neck_Col = 0
 let HeroIsForward = false
-let HeroImageBackwardCrouch: Image = null
-let HeroImageForwardCrouch: Image = null
 let HeroImageForward: Image = null
 let HeroImageBackward: Image = null
 let Hero: Sprite = null
