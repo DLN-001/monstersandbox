@@ -24,25 +24,25 @@ function dragonCreate () {
     tiles.placeOnTile(Dragon_Head, tiles.getTileLocation(Dragon_Neck_Col - 2, Dragon_Neck_Row - 2))
     Dragon_Head.x += 10
     Dragon_Head.y += 24
-    Dragon_Body = sprites.create(assets.image`Dragon_Body`, SpriteKind.Test)
+    Dragon_Body = sprites.create(custom.getFrame(assets.animation`DragonBody`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Body, tiles.getTileLocation(Dragon_Neck_Col + 3, Dragon_Neck_Row + 1))
     Dragon_Body.x += -6
     Dragon_Body.y += -6
-    DragonTail = sprites.create(assets.image`Dragon_Body0`, SpriteKind.Test)
+    DragonTail = sprites.create(custom.getFrame(assets.animation`DragonTail`, 0), SpriteKind.Test)
     tiles.placeOnTile(DragonTail, tiles.getTileLocation(Dragon_Neck_Col + 7, Dragon_Neck_Row + 2))
     DragonTail.x += -6
     DragonTail.y += -2
-    Dragon_Leg_Front1 = sprites.create(assets.image`Dragon_Leg_Front`, SpriteKind.Test)
+    Dragon_Leg_Front1 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Front1, tiles.getTileLocation(Dragon_Neck_Col + 1, Dragon_Neck_Row + 2))
     Dragon_Leg_Front1.y += -5
-    Dragon_Leg_Front2 = sprites.create(assets.image`Dragon_Leg_Front`, SpriteKind.Test)
+    Dragon_Leg_Front2 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Front2, tiles.getTileLocation(Dragon_Neck_Col + 1, Dragon_Neck_Row + 2))
     Dragon_Leg_Front2.y += -5
     Dragon_Leg_Front2.z += -10
-    Dragon_Leg_Back1 = sprites.create(assets.image`Dragon_Leg_Back`, SpriteKind.Test)
+    Dragon_Leg_Back1 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Back1, tiles.getTileLocation(Dragon_Neck_Col + 4, Dragon_Neck_Row + 2))
     Dragon_Leg_Back1.y += -5
-    Dragon_Leg_Back2 = sprites.create(assets.image`Dragon_Leg_Back`, SpriteKind.Test)
+    Dragon_Leg_Back2 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), SpriteKind.Test)
     tiles.placeOnTile(Dragon_Leg_Back2, tiles.getTileLocation(Dragon_Neck_Col + 4, Dragon_Neck_Row + 2))
     Dragon_Leg_Back2.y += -5
     Dragon_Leg_Back2.z += -10
