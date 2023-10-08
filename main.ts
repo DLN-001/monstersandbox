@@ -84,6 +84,7 @@ function dragonMoveLeg (myLegSprite: Sprite, myForwardIndicator: boolean) {
     myLegSprite.y += -4
     myLegSprite.x += Dragon_Leg_Step_X
     Dragon_Body.x += Dragon_Leg_Step_X / 4
+    DragonTail.x += Dragon_Leg_Step_X / 4
     Dragon_Neck.x += Dragon_Leg_Step_X / 4
     Dragon_Head.x += Dragon_Leg_Step_X / 4
     Dragon_Wing_Front.x += Dragon_Leg_Step_X / 4
