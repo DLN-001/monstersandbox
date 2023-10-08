@@ -15,6 +15,7 @@ function initializeHeroVariables () {
     Hero = sprites.create(HeroImageForward, SpriteKind.Player)
 }
 function dragonCreate () {
+    DragonLegFrontIndex = 0
     Dragon_Neck_Col = 13
     Dragon_Neck_Row = 12
     Dragon_Neck = sprites.create(custom.getFrame(assets.animation`DragonNeck`, 0), SpriteKind.Test)
@@ -92,6 +93,16 @@ function dragonMoveLeg (myLegSprite: Sprite, myForwardIndicator: boolean) {
     myLegSprite.y += 4
     pause(10)
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    for (let index = 0; index < 12; index++) {
+        Dragon_Body.y += 1
+        if (DragonLegFrontIndex < custom.getMaxFrameIndex(assets.animation`DragonLegFront`)) {
+            DragonLegFrontIndex += 1
+            Dragon_Leg_Front1.setImage(custom.getFrame(assets.animation`DragonLegFront`, DragonLegFrontIndex))
+        }
+        pause(50)
+    }
+})
 function dragonMoveMouth (mouthIndex: number, mouthDelay: number) {
     if (Dragon_Mouth_Index < mouthIndex) {
         Dragon_Mouth_Change = 1
@@ -150,15 +161,9 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function dragonFlapWings () {
-    for (let index = 0; index <= custom.getMaxFrameIndex(assets.animation`DragonWing`); index++) {
-        Dragon_Wing_Front.setImage(custom.getFrame(assets.animation`DragonWing`, index))
-        pause(10)
-    }
+    dragonMoveWing(custom.getMaxFrameIndex(assets.animation`DragonWing`), 10)
     Hero.ax = -50
-    for (let index = 0; index <= custom.getMaxFrameIndex(assets.animation`DragonWing`); index++) {
-        Dragon_Wing_Front.setImage(custom.getFrame(assets.animation`DragonWing`, custom.getMaxFrameIndex(assets.animation`DragonWing`) - index))
-        pause(10)
-    }
+    dragonMoveWing(0, 10)
     Hero.ax = 0
 }
 function initializeHeroPower () {
@@ -201,6 +206,19 @@ function dragonMoveNeck (neckIndex: number, neckDelay: number) {
         pause(neckDelay)
     }
 }
+function dragonMoveWing (wingIndex: number, wingDelay: number) {
+    if (DragonWingIndex < wingIndex) {
+        DragonWingChange = 1
+    } else {
+        DragonWingChange = -1
+    }
+    while (!(DragonWingIndex == wingIndex)) {
+        DragonWingIndex += DragonWingChange
+        Dragon_Wing_Front.setImage(custom.getFrame(assets.animation`DragonWing`, DragonWingIndex))
+        pause(wingDelay)
+    }
+}
+let DragonWingChange = 0
 let Dragon_Neck_Change = 0
 let PP: StatusBarSprite = null
 let Dragon_Fire: Sprite = null
@@ -218,10 +236,12 @@ let Dragon_Head: Sprite = null
 let Dragon_Neck: Sprite = null
 let Dragon_Neck_Row = 0
 let Dragon_Neck_Col = 0
+let DragonLegFrontIndex = 0
 let HeroIsForward = false
 let HeroImageForward: Image = null
 let HeroImageBackward: Image = null
 let Hero: Sprite = null
+let DragonWingIndex = 0
 let Dragon_Mouth_Index = 0
 let Dragon_Neck_Index = 0
 let HeroCameraXOffset = 0
@@ -229,7 +249,7 @@ HeroCameraXOffset = 50
 let IsMovingDragonHead = true
 Dragon_Neck_Index = 0
 Dragon_Mouth_Index = 0
-let Dragon_Wing_Index = 0
+DragonWingIndex = 0
 initializeHeroVariables()
 info.setScore(0)
 scene.setBackgroundImage(assets.image`Forest`)
