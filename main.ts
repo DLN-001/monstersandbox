@@ -326,7 +326,6 @@ info.setScore(0)
 scene.setBackgroundImage(assets.image`Forest`)
 tiles.setCurrentTilemap(tilemap`level1`)
 tiles.placeOnTile(Hero, tiles.getTileLocation(2, 13))
-Hero.z += 100
 initializeHeroHealth()
 initializeHeroPower()
 dragonCreate()
