@@ -15,7 +15,6 @@ function initializeHeroVariables () {
     Hero = sprites.create(HeroImageForward, SpriteKind.Player)
 }
 function dragonCreate () {
-    DragonLegFrontIndex = 0
     Dragon_Neck_Col = 13
     Dragon_Neck_Row = 12
     Dragon_Neck = sprites.create(custom.getFrame(assets.animation`DragonNeck`, 0), SpriteKind.Test)
@@ -99,6 +98,16 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         if (DragonLegFrontIndex < custom.getMaxFrameIndex(assets.animation`DragonLegFront`)) {
             DragonLegFrontIndex += 1
             Dragon_Leg_Front1.setImage(custom.getFrame(assets.animation`DragonLegFront`, DragonLegFrontIndex))
+            Dragon_Leg_Front2.setImage(custom.getFrame(assets.animation`DragonLegFront`, DragonLegFrontIndex))
+        }
+        if (DragonLegBackIndex < custom.getMaxFrameIndex(assets.animation`DragonLegBack`)) {
+            DragonLegBackIndex += 1
+            Dragon_Leg_Back1.setImage(custom.getFrame(assets.animation`DragonLegBack`, DragonLegBackIndex))
+            Dragon_Leg_Back2.setImage(custom.getFrame(assets.animation`DragonLegBack`, DragonLegBackIndex))
+        }
+        if (DragonTailIndex < custom.getMaxFrameIndex(assets.animation`DragonTail`)) {
+            DragonTailIndex += 1
+            DragonTail.setImage(custom.getFrame(assets.animation`DragonTail`, DragonTailIndex))
         }
         pause(50)
     }
@@ -236,11 +245,13 @@ let Dragon_Head: Sprite = null
 let Dragon_Neck: Sprite = null
 let Dragon_Neck_Row = 0
 let Dragon_Neck_Col = 0
-let DragonLegFrontIndex = 0
 let HeroIsForward = false
 let HeroImageForward: Image = null
 let HeroImageBackward: Image = null
 let Hero: Sprite = null
+let DragonTailIndex = 0
+let DragonLegFrontIndex = 0
+let DragonLegBackIndex = 0
 let DragonWingIndex = 0
 let Dragon_Mouth_Index = 0
 let Dragon_Neck_Index = 0
@@ -250,6 +261,9 @@ let IsMovingDragonHead = true
 Dragon_Neck_Index = 0
 Dragon_Mouth_Index = 0
 DragonWingIndex = 0
+DragonLegBackIndex = 0
+DragonLegFrontIndex = 0
+DragonTailIndex = 0
 initializeHeroVariables()
 info.setScore(0)
 scene.setBackgroundImage(assets.image`Forest`)
