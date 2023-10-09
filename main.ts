@@ -96,29 +96,31 @@ function dragonMoveLeg (myLegSprite: Sprite, myForwardIndicator: boolean, stepLe
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     dragonMoveNeck(0, 10)
-    dragonMoveLegPair(Dragon_Leg_Front2, Dragon_Leg_Back2, false, 4)
-    dragonWeaken(2)
+    dragonMoveLegPair(Dragon_Leg_Back1, Dragon_Leg_Front1, true, 4)
+    dragonWeaken(2, false, 10)
     pause(100)
-    dragonMoveLegPair(Dragon_Leg_Front1, Dragon_Leg_Back1, false, 4)
-    dragonWeaken(2)
+    dragonMoveLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, true, 4)
+    dragonWeaken(2, false, 10)
     dragonRoar(1000, 4)
     dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHead`), 10)
-    pause(1000)
+    pause(750)
     dragonMoveMouth(0, 10)
     pause(500)
-    dragonMoveForward(2)
-    dragonWeaken(2)
+    dragonMoveBackward(2)
+    dragonWeaken(2, false, 10)
     dragonRoar(500, 2)
     dragonMoveMouth(Math.round(custom.getMaxFrameIndex(assets.animation`DragonHead`) / 2), 10)
     pause(500)
     dragonMoveMouth(0, 10)
     pause(250)
-    dragonMoveBackward(2)
+    dragonMoveForward(2)
     dragonRoar(250, 1)
     dragonMoveMouth(Math.round(custom.getMaxFrameIndex(assets.animation`DragonHead`) / 4), 10)
-    pause(500)
-    dragonWeaken(24)
-    pause(500)
+    pause(250)
+    dragonMoveMouth(0, 10)
+    pause(250)
+    scene.cameraShake(8, 500)
+    dragonWeaken(30, true, 0)
 })
 function dragonMoveMouth (mouthIndex: number, mouthDelay: number) {
     if (Dragon_Mouth_Index < mouthIndex) {
@@ -177,13 +179,18 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         pause(10)
     }
 })
-function dragonWeaken (framesToProcess: number) {
+function dragonWeaken (framesToProcess: number, moveNeckIndicator: boolean, msDelay: number) {
     for (let index = 0; index < framesToProcess; index++) {
+        if (moveNeckIndicator && Dragon_Neck_Index + 4 < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
+            dragonMoveNeck(Dragon_Neck_Index + 4, 0)
+        }
         if (DragonWingIndex < custom.getMaxFrameIndex(assets.animation`DragonWingDeath`)) {
             DragonWingIndex += 1
             Dragon_Wing_Front.setImage(custom.getFrame(assets.animation`DragonWingDeath`, DragonWingIndex))
         }
         if (DragonBodyIndex < custom.getMaxFrameIndex(assets.animation`DragonBody`)) {
+            Dragon_Neck.y += 1
+            Dragon_Head.y += 1
             DragonBodyIndex += 1
             Dragon_Body.setImage(custom.getFrame(assets.animation`DragonBody`, DragonBodyIndex))
         }
@@ -201,7 +208,7 @@ function dragonWeaken (framesToProcess: number) {
             DragonTailIndex += 1
             DragonTail.setImage(custom.getFrame(assets.animation`DragonTail`, DragonTailIndex))
         }
-        pause(10)
+        pause(msDelay)
     }
 }
 function dragonFlapWings () {
