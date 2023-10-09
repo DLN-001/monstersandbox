@@ -159,8 +159,12 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function dragonWeaken (framesToProcess: number, moveNeckIndicator: boolean, msDelay: number) {
     for (let index = 0; index < framesToProcess; index++) {
-        if (moveNeckIndicator && Dragon_Neck_Index + 4 < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
-            dragonMoveNeck(Dragon_Neck_Index + 4, 0)
+        if (moveNeckIndicator) {
+            if (Dragon_Neck_Index + 4 < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
+                dragonMoveNeck(Dragon_Neck_Index + 4, 0)
+            } else if (Dragon_Neck_Index < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
+                dragonMoveNeck(Dragon_Neck_Index + 1, 0)
+            }
         }
         if (DragonWingIndex < custom.getMaxFrameIndex(assets.animation`DragonWingDeath`)) {
             DragonWingIndex += 1
