@@ -64,19 +64,19 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     }
     pause(500)
     dragonRoar(1000, 4)
-    dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHead`), 10)
+    dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHead`), 10, assets.animation`DragonHead`)
     pause(1300)
-    dragonMoveMouth(0, 10)
+    dragonMoveMouth(0, 10, assets.animation`DragonHead`)
     pause(1000)
     dragonMoveNeck(Math.round(custom.getMaxFrameIndex(assets.animation`DragonNeck`) / 2), 10)
-    dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHead`), 10)
+    dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHead`), 10, assets.animation`DragonHead`)
     dragonShootFire(50)
-    dragonMoveMouth(0, 10)
+    dragonMoveMouth(0, 10, assets.animation`DragonHead`)
     pause(1000)
     dragonMoveNeck(custom.getMaxFrameIndex(assets.animation`DragonNeck`), 10)
-    dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHead`), 10)
+    dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHead`), 10, assets.animation`DragonHead`)
     dragonShootFire(50)
-    dragonMoveMouth(0, 10)
+    dragonMoveMouth(0, 10, assets.animation`DragonHead`)
 })
 function dragonMoveLeg (myLegSprite: Sprite, myForwardIndicator: boolean, stepLength: number) {
     Dragon_Leg_Step_X = stepLength
@@ -96,33 +96,32 @@ function dragonMoveLeg (myLegSprite: Sprite, myForwardIndicator: boolean, stepLe
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     dragonMoveNeck(0, 10)
+    dragonMoveMouth(0, 10, assets.animation`DragonHead`)
     dragonMoveLegPair(Dragon_Leg_Back1, Dragon_Leg_Front1, true, 4)
+    Dragon_Head.setImage(custom.getFrame(assets.animation`DragonHeadDeath1`, 0))
     dragonWeaken(2, false, 10)
     pause(100)
     dragonMoveLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, true, 4)
     dragonWeaken(2, false, 10)
-    dragonRoar(1000, 4)
-    dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHead`), 10)
-    pause(750)
-    dragonMoveMouth(0, 10)
     pause(500)
     dragonMoveBackward(2)
     dragonWeaken(2, false, 10)
     dragonRoar(500, 2)
-    dragonMoveMouth(Math.round(custom.getMaxFrameIndex(assets.animation`DragonHead`) / 2), 10)
+    dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHeadDeath1`), 10, assets.animation`DragonHeadDeath1`)
     pause(500)
-    dragonMoveMouth(0, 10)
+    dragonMoveMouth(0, 10, assets.animation`DragonHeadDeath1`)
     pause(250)
     dragonMoveForward(2)
-    dragonRoar(250, 1)
-    dragonMoveMouth(Math.round(custom.getMaxFrameIndex(assets.animation`DragonHead`) / 4), 10)
+    dragonRoar(250, 0)
+    dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHeadDeath0`), 10, assets.animation`DragonHeadDeath0`)
     pause(250)
-    dragonMoveMouth(0, 10)
+    dragonMoveMouth(0, 10, assets.animation`DragonHeadDeath0`)
     pause(250)
+    Dragon_Head.setImage(assets.image`myImage`)
     scene.cameraShake(8, 500)
     dragonWeaken(30, true, 0)
 })
-function dragonMoveMouth (mouthIndex: number, mouthDelay: number) {
+function dragonMoveMouth (mouthIndex: number, mouthDelay: number, mouthImageList: any[]) {
     if (Dragon_Mouth_Index < mouthIndex) {
         Dragon_Mouth_Change = 1
     } else {
@@ -130,7 +129,7 @@ function dragonMoveMouth (mouthIndex: number, mouthDelay: number) {
     }
     while (!(Dragon_Mouth_Index == mouthIndex)) {
         Dragon_Mouth_Index += Dragon_Mouth_Change
-        Dragon_Head.setImage(custom.getFrame(assets.animation`DragonHead`, Dragon_Mouth_Index))
+        Dragon_Head.setImage(custom.getFrame(mouthImageList, Dragon_Mouth_Index))
         pause(mouthDelay)
     }
 }
