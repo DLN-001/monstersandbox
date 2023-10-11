@@ -269,7 +269,7 @@ function dragonDeath () {
     pause(250)
     dragonMoveMouth(0, 10, assets.animation`DragonHeadDeath0`)
     pause(250)
-    Dragon_Head.setImage(assets.image`myImage`)
+    Dragon_Head.setImage(assets.image`dragonDead1`)
     scene.cameraShake(8, 500)
     dragonWeaken(30, true, 0)
 }
