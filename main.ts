@@ -9,54 +9,48 @@ namespace StatusBarKind {
     export const Mush_manHP = StatusBarKind.create()
 }
 function initializeHeroVariables () {
-    HeroImageBackward = assets.image`WizBackward`
-    HeroImageForward = assets.image`WizForward`
-    HeroIsForward = true
-    Hero = sprites.create(HeroImageForward, SpriteKind.Player)
+    Hero = sprites.create(assets.image`WizForward`, SpriteKind.Player)
+    tiles.placeOnTile(Hero, tiles.getTileLocation(2, 13))
+    scene.cameraFollowSprite(Hero)
+    Hero.ay = 500
+    controller.moveSprite(Hero, 100, 0)
 }
 function dragonCreate () {
-    Dragon_Neck_Col = 13
-    Dragon_Neck_Row = 12
-    Dragon_Neck = sprites.create(custom.getFrame(assets.animation`DragonNeck`, 0), SpriteKind.Test)
-    tiles.placeOnTile(Dragon_Neck, tiles.getTileLocation(Dragon_Neck_Col, Dragon_Neck_Row))
-    Dragon_Neck.y += 8
-    Dragon_Head = sprites.create(custom.getFrame(assets.animation`DragonHead`, 0), SpriteKind.Test)
-    tiles.placeOnTile(Dragon_Head, tiles.getTileLocation(Dragon_Neck_Col - 2, Dragon_Neck_Row - 2))
-    Dragon_Head.x += 10
-    Dragon_Head.y += 24
-    Dragon_Body = sprites.create(custom.getFrame(assets.animation`DragonBody`, 0), SpriteKind.Test)
-    tiles.placeOnTile(Dragon_Body, tiles.getTileLocation(Dragon_Neck_Col + 3, Dragon_Neck_Row + 1))
-    Dragon_Body.x += -6
-    Dragon_Body.y += -6
+    DragonNeckCol = 13
+    DragonNeckRow = 12
+    DragonNeck = sprites.create(custom.getFrame(assets.animation`DragonNeck`, 0), SpriteKind.Test)
+    tiles.placeOnTile(DragonNeck, tiles.getTileLocation(DragonNeckCol, DragonNeckRow))
+    DragonNeck.y += 8
+    DragonHead = sprites.create(custom.getFrame(assets.animation`DragonHead`, 0), SpriteKind.Test)
+    tiles.placeOnTile(DragonHead, tiles.getTileLocation(DragonNeckCol - 2, DragonNeckRow - 2))
+    DragonHead.x += 10
+    DragonHead.y += 24
+    DragonBody = sprites.create(custom.getFrame(assets.animation`DragonBody`, 0), SpriteKind.Test)
+    tiles.placeOnTile(DragonBody, tiles.getTileLocation(DragonNeckCol + 3, DragonNeckRow + 1))
+    DragonBody.x += -6
+    DragonBody.y += -6
     DragonTail = sprites.create(custom.getFrame(assets.animation`DragonTail`, 0), SpriteKind.Test)
-    tiles.placeOnTile(DragonTail, tiles.getTileLocation(Dragon_Neck_Col + 7, Dragon_Neck_Row + 2))
+    tiles.placeOnTile(DragonTail, tiles.getTileLocation(DragonNeckCol + 7, DragonNeckRow + 2))
     DragonTail.x += -6
     DragonTail.y += -2
-    Dragon_Leg_Front1 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), SpriteKind.Test)
-    tiles.placeOnTile(Dragon_Leg_Front1, tiles.getTileLocation(Dragon_Neck_Col + 1, Dragon_Neck_Row + 2))
-    Dragon_Leg_Front1.y += -5
-    Dragon_Leg_Front2 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), SpriteKind.Test)
-    tiles.placeOnTile(Dragon_Leg_Front2, tiles.getTileLocation(Dragon_Neck_Col + 1, Dragon_Neck_Row + 2))
-    Dragon_Leg_Front2.y += -5
-    Dragon_Leg_Front2.z += -10
-    Dragon_Leg_Back1 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), SpriteKind.Test)
-    tiles.placeOnTile(Dragon_Leg_Back1, tiles.getTileLocation(Dragon_Neck_Col + 4, Dragon_Neck_Row + 2))
-    Dragon_Leg_Back1.y += -5
-    Dragon_Leg_Back2 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), SpriteKind.Test)
-    tiles.placeOnTile(Dragon_Leg_Back2, tiles.getTileLocation(Dragon_Neck_Col + 4, Dragon_Neck_Row + 2))
-    Dragon_Leg_Back2.y += -5
-    Dragon_Leg_Back2.z += -10
-    Dragon_Wing_Front = sprites.create(custom.getFrame(assets.animation`DragonWing`, 0), SpriteKind.Test)
-    tiles.placeOnTile(Dragon_Wing_Front, tiles.getTileLocation(Dragon_Neck_Col + 3, Dragon_Neck_Row - 0))
-    Dragon_Wing_Front.y += 8
-    Dragon_Wing_Front.x += -9
-}
-function initializeHeroHealth () {
-    HP = statusbars.create(20, 4, StatusBarKind.Health)
-    HP.attachToSprite(Hero, 1, 0)
-    HP.max = 99
-    HP.value = 99
-    HP.setColor(7, 2)
+    DragonLegFront1 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), SpriteKind.Test)
+    tiles.placeOnTile(DragonLegFront1, tiles.getTileLocation(DragonNeckCol + 1, DragonNeckRow + 2))
+    DragonLegFront1.y += -5
+    DragonLegFront2 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), SpriteKind.Test)
+    tiles.placeOnTile(DragonLegFront2, tiles.getTileLocation(DragonNeckCol + 1, DragonNeckRow + 2))
+    DragonLegFront2.y += -5
+    DragonLegFront2.z += -10
+    DragonLegBack1 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), SpriteKind.Test)
+    tiles.placeOnTile(DragonLegBack1, tiles.getTileLocation(DragonNeckCol + 4, DragonNeckRow + 2))
+    DragonLegBack1.y += -5
+    DragonLegBack2 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), SpriteKind.Test)
+    tiles.placeOnTile(DragonLegBack2, tiles.getTileLocation(DragonNeckCol + 4, DragonNeckRow + 2))
+    DragonLegBack2.y += -5
+    DragonLegBack2.z += -10
+    DragonWingFront = sprites.create(custom.getFrame(assets.animation`DragonWing`, 0), SpriteKind.Test)
+    tiles.placeOnTile(DragonWingFront, tiles.getTileLocation(DragonNeckCol + 3, DragonNeckRow - 0))
+    DragonWingFront.y += 8
+    DragonWingFront.x += -9
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     dragonIntro()
@@ -71,17 +65,17 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     dragonMoveMouth(0, 10, assets.animation`DragonHead`)
 })
 function dragonMoveLeg (myLegSprite: Sprite, myForwardIndicator: boolean, stepLength: number) {
-    Dragon_Leg_Step_X = stepLength
+    DragonLegStepX = stepLength
     if (myForwardIndicator) {
-        Dragon_Leg_Step_X = Dragon_Leg_Step_X * -1
+        DragonLegStepX = DragonLegStepX * -1
     }
     myLegSprite.y += -4
-    myLegSprite.x += Dragon_Leg_Step_X
-    Dragon_Body.x += Dragon_Leg_Step_X / 4
-    DragonTail.x += Dragon_Leg_Step_X / 4
-    Dragon_Neck.x += Dragon_Leg_Step_X / 4
-    Dragon_Head.x += Dragon_Leg_Step_X / 4
-    Dragon_Wing_Front.x += Dragon_Leg_Step_X / 4
+    myLegSprite.x += DragonLegStepX
+    DragonBody.x += DragonLegStepX / 4
+    DragonTail.x += DragonLegStepX / 4
+    DragonNeck.x += DragonLegStepX / 4
+    DragonHead.x += DragonLegStepX / 4
+    DragonWingFront.x += DragonLegStepX / 4
     pause(100)
     myLegSprite.y += 4
     pause(10)
@@ -90,36 +84,23 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     dragonDeath()
 })
 function dragonMoveMouth (mouthIndex: number, mouthDelay: number, mouthImageList: any[]) {
-    if (Dragon_Mouth_Index < mouthIndex) {
-        Dragon_Mouth_Change = 1
+    if (DragonMouthIndex < mouthIndex) {
+        DragonMouthChange = 1
     } else {
-        Dragon_Mouth_Change = -1
+        DragonMouthChange = -1
     }
-    while (!(Dragon_Mouth_Index == mouthIndex)) {
-        Dragon_Mouth_Index += Dragon_Mouth_Change
-        Dragon_Head.setImage(custom.getFrame(mouthImageList, Dragon_Mouth_Index))
+    while (!(DragonMouthIndex == mouthIndex)) {
+        DragonMouthIndex += DragonMouthChange
+        DragonHead.setImage(custom.getFrame(mouthImageList, DragonMouthIndex))
         pause(mouthDelay)
     }
 }
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    HeroIsForward = false
-    while (HeroCameraXOffset > -50 && HeroIsForward == false) {
-        HeroCameraXOffset += -1
-        pause(10)
-    }
-})
-controller.right.onEvent(ControllerButtonEvent.Released, function () {
-    HeroIsForward = false
-})
 function dragonMoveBackward (stepLength: number) {
-    dragonMoveLegPair(Dragon_Leg_Front2, Dragon_Leg_Back2, false, stepLength)
+    dragonMoveLegPair(DragonLegFront2, DragonLegBack2, false, stepLength)
     pause(100)
-    dragonMoveLegPair(Dragon_Leg_Front1, Dragon_Leg_Back1, false, stepLength)
+    dragonMoveLegPair(DragonLegFront1, DragonLegBack1, false, stepLength)
     pause(100)
 }
-controller.left.onEvent(ControllerButtonEvent.Released, function () {
-    HeroIsForward = true
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Dragon_Fire_Kind, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     sprite.startEffect(effects.fire, 500)
@@ -136,55 +117,48 @@ function dragonIntro () {
     pause(1000)
 }
 function dragonShootFire (fireGrowthDelay: number) {
-    if (Dragon_Mouth_Index == custom.getMaxFrameIndex(assets.animation`DragonHead`)) {
-        Dragon_Fire = sprites.createProjectileFromSprite(assets.image`Fire`, Dragon_Head, -100, 0)
-        Dragon_Fire.setKind(SpriteKind.Dragon_Fire_Kind)
-        Dragon_Fire.z += -100
-        Dragon_Fire.y += 3.5
-        Dragon_Fire.x += 4
-        Dragon_Fire.setScale(0.5, ScaleAnchor.Middle)
+    if (DragonMouthIndex == custom.getMaxFrameIndex(assets.animation`DragonHead`)) {
+        DragonFire = sprites.createProjectileFromSprite(assets.image`Fire`, DragonHead, -100, 0)
+        DragonFire.setKind(SpriteKind.Dragon_Fire_Kind)
+        DragonFire.z += -100
+        DragonFire.y += 3.5
+        DragonFire.x += 4
+        DragonFire.setScale(0.5, ScaleAnchor.Middle)
         for (let index = 0; index < 4; index++) {
             pause(fireGrowthDelay)
-            Dragon_Fire.changeScale(0.125, ScaleAnchor.Middle)
-            Dragon_Fire.vx += -12.5
+            DragonFire.changeScale(0.125, ScaleAnchor.Middle)
+            DragonFire.vx += -12.5
         }
     }
 }
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    HeroIsForward = true
-    while (HeroCameraXOffset < 50 && HeroIsForward == true) {
-        HeroCameraXOffset += 1
-        pause(10)
-    }
-})
 function dragonWeaken (framesToProcess: number, moveNeckIndicator: boolean, msDelay: number) {
     for (let index = 0; index < framesToProcess; index++) {
         if (moveNeckIndicator) {
-            if (Dragon_Neck_Index + 4 < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
-                dragonMoveNeck(Dragon_Neck_Index + 4, 0)
-            } else if (Dragon_Neck_Index < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
-                dragonMoveNeck(Dragon_Neck_Index + 1, 0)
+            if (DragonNeckIndex + 4 < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
+                dragonMoveNeck(DragonNeckIndex + 4, 0)
+            } else if (DragonNeckIndex < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
+                dragonMoveNeck(DragonNeckIndex + 1, 0)
             }
         }
         if (DragonWingIndex < custom.getMaxFrameIndex(assets.animation`DragonWingDeath`)) {
             DragonWingIndex += 1
-            Dragon_Wing_Front.setImage(custom.getFrame(assets.animation`DragonWingDeath`, DragonWingIndex))
+            DragonWingFront.setImage(custom.getFrame(assets.animation`DragonWingDeath`, DragonWingIndex))
         }
         if (DragonBodyIndex < custom.getMaxFrameIndex(assets.animation`DragonBody`)) {
-            Dragon_Neck.y += 1
-            Dragon_Head.y += 1
+            DragonNeck.y += 1
+            DragonHead.y += 1
             DragonBodyIndex += 1
-            Dragon_Body.setImage(custom.getFrame(assets.animation`DragonBody`, DragonBodyIndex))
+            DragonBody.setImage(custom.getFrame(assets.animation`DragonBody`, DragonBodyIndex))
         }
         if (DragonLegFrontIndex < custom.getMaxFrameIndex(assets.animation`DragonLegFront`)) {
             DragonLegFrontIndex += 1
-            Dragon_Leg_Front1.setImage(custom.getFrame(assets.animation`DragonLegFront`, DragonLegFrontIndex))
-            Dragon_Leg_Front2.setImage(custom.getFrame(assets.animation`DragonLegFront`, DragonLegFrontIndex))
+            DragonLegFront1.setImage(custom.getFrame(assets.animation`DragonLegFront`, DragonLegFrontIndex))
+            DragonLegFront2.setImage(custom.getFrame(assets.animation`DragonLegFront`, DragonLegFrontIndex))
         }
         if (DragonLegBackIndex < custom.getMaxFrameIndex(assets.animation`DragonLegBack`)) {
             DragonLegBackIndex += 1
-            Dragon_Leg_Back1.setImage(custom.getFrame(assets.animation`DragonLegBack`, DragonLegBackIndex))
-            Dragon_Leg_Back2.setImage(custom.getFrame(assets.animation`DragonLegBack`, DragonLegBackIndex))
+            DragonLegBack1.setImage(custom.getFrame(assets.animation`DragonLegBack`, DragonLegBackIndex))
+            DragonLegBack2.setImage(custom.getFrame(assets.animation`DragonLegBack`, DragonLegBackIndex))
         }
         if (DragonTailIndex < custom.getMaxFrameIndex(assets.animation`DragonTail`)) {
             DragonTailIndex += 1
@@ -199,17 +173,10 @@ function dragonFlapWings () {
     dragonMoveWing(0, 10)
     Hero.ax = 0
 }
-function initializeHeroPower () {
-    PP = statusbars.create(4, 20, StatusBarKind.Magic)
-    PP.attachToSprite(Hero, 1, 0)
-    PP.max = 50
-    PP.value = 50
-    PP.setColor(8, 15)
-}
 function dragonMoveForward (stepLength: number) {
-    dragonMoveLegPair(Dragon_Leg_Back1, Dragon_Leg_Front1, true, stepLength)
+    dragonMoveLegPair(DragonLegBack1, DragonLegFront1, true, stepLength)
     pause(100)
-    dragonMoveLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, true, stepLength)
+    dragonMoveLegPair(DragonLegBack2, DragonLegFront2, true, stepLength)
     pause(100)
 }
 function dragonRoar (msToRoar: number, pixelsToShake: number) {
@@ -233,27 +200,27 @@ function dragonMoveLegPair (myFirstLegSprite: Sprite, mySecondLegSprite: Sprite,
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
 }
 function dragonMoveNeck (neckIndex: number, neckDelay: number) {
-    if (Dragon_Neck_Index < neckIndex) {
-        Dragon_Neck_Change = 1
+    if (DragonNeckIndex < neckIndex) {
+        DragonNeckChange = 1
     } else {
-        Dragon_Neck_Change = -1
+        DragonNeckChange = -1
     }
-    while (!(Dragon_Neck_Index == neckIndex)) {
-        Dragon_Neck_Index += Dragon_Neck_Change
-        Dragon_Neck.setImage(custom.getFrame(assets.animation`DragonNeck`, Dragon_Neck_Index))
-        Dragon_Head.x += -8 * Dragon_Neck_Change / 33
-        Dragon_Head.y += 30 * Dragon_Neck_Change / 33
+    while (!(DragonNeckIndex == neckIndex)) {
+        DragonNeckIndex += DragonNeckChange
+        DragonNeck.setImage(custom.getFrame(assets.animation`DragonNeck`, DragonNeckIndex))
+        DragonHead.x += -8 * DragonNeckChange / 33
+        DragonHead.y += 30 * DragonNeckChange / 33
         pause(neckDelay)
     }
 }
 function dragonDeath () {
     dragonMoveNeck(0, 10)
     dragonMoveMouth(0, 10, assets.animation`DragonHead`)
-    dragonMoveLegPair(Dragon_Leg_Back1, Dragon_Leg_Front1, true, 4)
-    Dragon_Head.setImage(custom.getFrame(assets.animation`DragonHeadDeath1`, 0))
+    dragonMoveLegPair(DragonLegBack1, DragonLegFront1, true, 4)
+    DragonHead.setImage(custom.getFrame(assets.animation`DragonHeadDeath1`, 0))
     dragonWeaken(2, false, 10)
     pause(100)
-    dragonMoveLegPair(Dragon_Leg_Back2, Dragon_Leg_Front2, true, 4)
+    dragonMoveLegPair(DragonLegBack2, DragonLegFront2, true, 4)
     dragonWeaken(2, false, 10)
     pause(500)
     dragonMoveBackward(2)
@@ -269,7 +236,7 @@ function dragonDeath () {
     pause(250)
     dragonMoveMouth(0, 10, assets.animation`DragonHeadDeath0`)
     pause(250)
-    Dragon_Head.setImage(assets.image`dragonDead1`)
+    DragonHead.setImage(assets.image`dragonDead1`)
     scene.cameraShake(8, 500)
     dragonWeaken(30, true, 0)
 }
@@ -281,63 +248,43 @@ function dragonMoveWing (wingIndex: number, wingDelay: number) {
     }
     while (!(DragonWingIndex == wingIndex)) {
         DragonWingIndex += DragonWingChange
-        Dragon_Wing_Front.setImage(custom.getFrame(assets.animation`DragonWing`, DragonWingIndex))
+        DragonWingFront.setImage(custom.getFrame(assets.animation`DragonWing`, DragonWingIndex))
         pause(wingDelay)
     }
 }
 let DragonWingChange = 0
-let Dragon_Neck_Change = 0
-let PP: StatusBarSprite = null
-let Dragon_Fire: Sprite = null
-let Dragon_Mouth_Change = 0
-let Dragon_Leg_Step_X = 0
-let HP: StatusBarSprite = null
-let Dragon_Wing_Front: Sprite = null
-let Dragon_Leg_Back2: Sprite = null
-let Dragon_Leg_Back1: Sprite = null
-let Dragon_Leg_Front2: Sprite = null
-let Dragon_Leg_Front1: Sprite = null
+let DragonNeckChange = 0
+let DragonFire: Sprite = null
+let DragonMouthChange = 0
+let DragonLegStepX = 0
+let DragonWingFront: Sprite = null
+let DragonLegBack2: Sprite = null
+let DragonLegBack1: Sprite = null
+let DragonLegFront2: Sprite = null
+let DragonLegFront1: Sprite = null
 let DragonTail: Sprite = null
-let Dragon_Body: Sprite = null
-let Dragon_Head: Sprite = null
-let Dragon_Neck: Sprite = null
-let Dragon_Neck_Row = 0
-let Dragon_Neck_Col = 0
-let HeroIsForward = false
-let HeroImageForward: Image = null
-let HeroImageBackward: Image = null
+let DragonBody: Sprite = null
+let DragonHead: Sprite = null
+let DragonNeck: Sprite = null
+let DragonNeckRow = 0
+let DragonNeckCol = 0
 let Hero: Sprite = null
 let DragonBodyIndex = 0
 let DragonTailIndex = 0
 let DragonLegFrontIndex = 0
 let DragonLegBackIndex = 0
 let DragonWingIndex = 0
-let Dragon_Mouth_Index = 0
-let Dragon_Neck_Index = 0
-let HeroCameraXOffset = 0
+let DragonMouthIndex = 0
+let DragonNeckIndex = 0
 music.setVolume(255)
-HeroCameraXOffset = 50
-let IsMovingDragonHead = true
-Dragon_Neck_Index = 0
-Dragon_Mouth_Index = 0
+DragonNeckIndex = 0
+DragonMouthIndex = 0
 DragonWingIndex = 0
 DragonLegBackIndex = 0
 DragonLegFrontIndex = 0
 DragonTailIndex = 0
 DragonBodyIndex = 0
-initializeHeroVariables()
-info.setScore(0)
 scene.setBackgroundImage(assets.image`Forest`)
 tiles.setCurrentTilemap(tilemap`level1`)
-tiles.placeOnTile(Hero, tiles.getTileLocation(2, 13))
-initializeHeroHealth()
-initializeHeroPower()
+initializeHeroVariables()
 dragonCreate()
-Hero.ay = 500
-controller.moveSprite(Hero, 100, 0)
-forever(function () {
-    info.setScore(HeroCameraXOffset)
-})
-forever(function () {
-    scene.centerCameraAt(Hero.x + HeroCameraXOffset, Hero.y)
-})
