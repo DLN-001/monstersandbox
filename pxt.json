@@ -18,7 +18,8 @@
         "images.g.jres",
         "images.g.ts",
         "main.py",
-        "custom.ts"
+        "custom.ts",
+        "dragon.ts"
     ],
     "testFiles": [
         "test.ts"
@@ -34,7 +35,7 @@
     "supportedTargets": [
         "arcade"
     ],
-    "preferredEditor": "blocksprj",
+    "preferredEditor": "tsprj",
     "palette": [
         "#000000",
         "#FFFFFF",

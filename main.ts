@@ -81,7 +81,8 @@ function dragonMoveLeg (myLegSprite: Sprite, myForwardIndicator: boolean, stepLe
     pause(10)
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    dragonDeath()
+    dragon.openMouth(myDragon)
+    dragon.shootFire(myDragon, SpriteKind.Dragon_Fire_Kind)
 })
 function dragonMoveMouth (mouthIndex: number, mouthDelay: number, mouthImageList: any[]) {
     if (DragonMouthIndex < mouthIndex) {
@@ -101,10 +102,6 @@ function dragonMoveBackward (stepLength: number) {
     dragonMoveLegPair(DragonLegFront1, DragonLegBack1, false, stepLength)
     pause(100)
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Dragon_Fire_Kind, function (sprite, otherSprite) {
-    sprites.destroy(otherSprite)
-    sprite.startEffect(effects.fire, 500)
-})
 function dragonIntro () {
     for (let index = 0; index < 4; index++) {
         dragonMoveForward(18)
@@ -269,6 +266,7 @@ let DragonNeck: Sprite = null
 let DragonNeckRow = 0
 let DragonNeckCol = 0
 let Hero: Sprite = null
+let myDragon: Dragon = null
 let DragonBodyIndex = 0
 let DragonTailIndex = 0
 let DragonLegFrontIndex = 0
@@ -288,3 +286,5 @@ scene.setBackgroundImage(assets.image`Forest`)
 tiles.setCurrentTilemap(tilemap`level1`)
 initializeHeroVariables()
 dragonCreate()
+myDragon = dragon.create(SpriteKind.Player)
+dragon.placeOnTile(myDragon, tiles.getTileLocation(6, 12))
