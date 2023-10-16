@@ -61,30 +61,30 @@ namespace dragon {
     //% loc.shadow=mapgettile
     //% group="Create" 
     export function placeOnTile(dragon: Dragon, loc: tiles.Location): void {
-        tiles.placeOnTile(dragon.dragonNeck, tiles.getTileLocation(loc.column, loc.row))
-        dragon.dragonNeck.y += 8
-        tiles.placeOnTile(dragon.dragonHead, tiles.getTileLocation(loc.column - 2, loc.row - 2))
-        dragon.dragonHead.x += 10
-        dragon.dragonHead.y += 24
-        tiles.placeOnTile(dragon.dragonBody, tiles.getTileLocation(loc.column + 3, loc.row + 1))
-        dragon.dragonBody.x += -6
-        dragon.dragonBody.y += -6
-        tiles.placeOnTile(dragon.dragonTail, tiles.getTileLocation(loc.column + 7, loc.row + 2))
-        dragon.dragonTail.x += -6
-        dragon.dragonTail.y += -2
-        tiles.placeOnTile(dragon.dragonLegFront1, tiles.getTileLocation(loc.column + 1, loc.row + 2))
-        dragon.dragonLegFront1.y += -5
-        tiles.placeOnTile(dragon.dragonLegFront2, tiles.getTileLocation(loc.column + 1, loc.row + 2))
-        dragon.dragonLegFront2.y += -5
-        dragon.dragonLegFront2.z += -10
-        tiles.placeOnTile(dragon.dragonLegBack1, tiles.getTileLocation(loc.column + 4, loc.row + 2))
-        dragon.dragonLegBack1.y += -5
-        tiles.placeOnTile(dragon.dragonLegBack2, tiles.getTileLocation(loc.column + 4, loc.row + 2))
-        dragon.dragonLegBack2.y += -5
-        dragon.dragonLegBack2.z += -10
-        tiles.placeOnTile(dragon.dragonWingFront, tiles.getTileLocation(loc.column + 3, loc.row - 0))
-        dragon.dragonWingFront.y += 8
-        dragon.dragonWingFront.x += -9
+        tiles.placeOnTile(dragon.neck, tiles.getTileLocation(loc.column, loc.row))
+        dragon.neck.y += 8
+        tiles.placeOnTile(dragon.head, tiles.getTileLocation(loc.column - 2, loc.row - 2))
+        dragon.head.x += 10
+        dragon.head.y += 24
+        tiles.placeOnTile(dragon.body, tiles.getTileLocation(loc.column + 3, loc.row + 1))
+        dragon.body.x += -6
+        dragon.body.y += -6
+        tiles.placeOnTile(dragon.tail, tiles.getTileLocation(loc.column + 7, loc.row + 2))
+        dragon.tail.x += -6
+        dragon.tail.y += -2
+        tiles.placeOnTile(dragon.legFront1, tiles.getTileLocation(loc.column + 1, loc.row + 2))
+        dragon.legFront1.y += -5
+        tiles.placeOnTile(dragon.legFront2, tiles.getTileLocation(loc.column + 1, loc.row + 2))
+        dragon.legFront2.y += -5
+        dragon.legFront2.z += -10
+        tiles.placeOnTile(dragon.legBack1, tiles.getTileLocation(loc.column + 4, loc.row + 2))
+        dragon.legBack1.y += -5
+        tiles.placeOnTile(dragon.legBack2, tiles.getTileLocation(loc.column + 4, loc.row + 2))
+        dragon.legBack2.y += -5
+        dragon.legBack2.z += -10
+        tiles.placeOnTile(dragon.wingFront, tiles.getTileLocation(loc.column + 3, loc.row - 0))
+        dragon.wingFront.y += 8
+        dragon.wingFront.x += -9
     }
 
     /**
@@ -180,9 +180,9 @@ namespace dragon {
     function dragonWeaken(framesToProcess: number, moveNeckIndicator: boolean, msDelay: number) {
         for (let index = 0; index < framesToProcess; index++) {
             if (moveNeckIndicator) {
-                if (DragonNeckIndex + 4 < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
+                if (DragonNeckIndex + 4 < custom.getMaxFrameIndex(assets.animation`neck`)) {
                     dragonMoveNeck(DragonNeckIndex + 4, 0)
-                } else if (DragonNeckIndex < custom.getMaxFrameIndex(assets.animation`DragonNeck`)) {
+                } else if (DragonNeckIndex < custom.getMaxFrameIndex(assets.animation`neck`)) {
                     dragonMoveNeck(DragonNeckIndex + 1, 0)
                 }
             }
@@ -293,110 +293,98 @@ namespace dragon {
 //% blockNamespace=custom color="#6699CC" blockGap=8
 class Dragon {
 
-    //% group="Properties" blockSetVariable="myDart"
-    //% blockCombine block="angle"
-    //% weight=8
     private kind: number;
 
-    private dragonBodyIndex: number;
-    private dragonNeckIndex: number;
-    private dragonTailIndex: number;
-    private dragonLegFrontIndex: number;
-    private dragonLegBackIndex: number;
-    private dragonWingIndex: number;
-    private dragonMouthIndex: number;
+    private bodyIndex = 0;
+    private neckIndex = 0;
+    private tailIndex = 0;
+    private legFrontIndex = 0;
+    private legBackIndex = 0;
+    private wingIndex = 0;
+    private mouthIndex = 0;
 
     //*Sprites
-    public dragonHead: Sprite;
-    public dragonNeck: Sprite;
-    public dragonBody: Sprite;
-    public dragonWingFront: Sprite;
-    public dragonLegBack1: Sprite;
-    public dragonLegBack2: Sprite;
-    public dragonLegFront1: Sprite;
-    public dragonLegFront2: Sprite;
-    public dragonTail: Sprite;
+    public head: Sprite;
+    public neck: Sprite;
+    public body: Sprite;
+    public wingFront: Sprite;
+    public legBack1: Sprite;
+    public legBack2: Sprite;
+    public legFront1: Sprite;
+    public legFront2: Sprite;
+    public tail: Sprite;
 
-    private dragonHeadAnimation: Image[];
-    private dragonHeadAnimationMaxIndex: number;
-    private dragonNeckAnimation: Image[];
-    private dragonNeckAnimationMaxIndex: number;
-    private dragonFireImage: Image;
+    private headAnimation: Image[];
+    private headAnimationMaxIndex: number;
+    private neckAnimation: Image[];
+    private neckAnimationMaxIndex: number;
+    private fireImage: Image;
 
     public constructor(kind: number) {
         this.kind = kind;
-        this.dragonBodyIndex = 0;
-        this.dragonNeckIndex = 0;
-        this.dragonTailIndex = 0;
-        this.dragonLegFrontIndex = 0;
-        this.dragonLegBackIndex = 0;
-        this.dragonWingIndex = 0;
-        this.dragonMouthIndex = 0;
 
-        this.dragonBodyIndex = 0;
-        this.dragonNeckIndex = 0;
-        this.dragonNeck = sprites.create(custom.getFrame(assets.animation`DragonNeck`, 0), this.kind);
-        this.dragonHead = sprites.create(custom.getFrame(assets.animation`DragonHead`, 0), this.kind);
-        this.dragonBody = sprites.create(custom.getFrame(assets.animation`DragonBody`, 0), this.kind);
-        this.dragonTail = sprites.create(custom.getFrame(assets.animation`DragonTail`, 0), this.kind);
-        this.dragonLegFront1 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), this.kind);
-        this.dragonLegFront2 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), this.kind);
-        this.dragonLegBack1 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), this.kind);
-        this.dragonLegBack2 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), this.kind);
-        this.dragonWingFront = sprites.create(custom.getFrame(assets.animation`DragonWing`, 0), this.kind);
+        this.neck = sprites.create(custom.getFrame(assets.animation`DragonNeck`, 0), this.kind);
+        this.head = sprites.create(custom.getFrame(assets.animation`DragonHead`, 0), this.kind);
+        this.body = sprites.create(custom.getFrame(assets.animation`DragonBody`, 0), this.kind);
+        this.tail = sprites.create(custom.getFrame(assets.animation`DragonTail`, 0), this.kind);
+        this.legFront1 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), this.kind);
+        this.legFront2 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), this.kind);
+        this.legBack1 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), this.kind);
+        this.legBack2 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), this.kind);
+        this.wingFront = sprites.create(custom.getFrame(assets.animation`DragonWing`, 0), this.kind);
 
-        this.dragonFireImage = assets.image`Fire`;
+        this.fireImage = assets.image`Fire`;
 
-        this.dragonHeadAnimation = assets.animation`DragonHead`;
-        this.dragonHeadAnimationMaxIndex = custom.getMaxFrameIndex(this.dragonHeadAnimation);
-        this.dragonNeckAnimation = assets.animation`DragonNeck`;
-        this.dragonNeckAnimationMaxIndex = custom.getMaxFrameIndex(this.dragonNeckAnimation);
+        this.headAnimation = assets.animation`DragonHead`;
+        this.headAnimationMaxIndex = custom.getMaxFrameIndex(this.headAnimation);
+        this.neckAnimation = assets.animation`DragonNeck`;
+        this.neckAnimationMaxIndex = custom.getMaxFrameIndex(this.neckAnimation);
     }
 
     public getHeadAnimationMaxIndex() {
-        return this.dragonHeadAnimationMaxIndex;
+        return this.headAnimationMaxIndex;
     }
 
     public getNeckAnimationMaxIndex() {
-        return this.dragonNeckAnimationMaxIndex;
+        return this.neckAnimationMaxIndex;
     }
 
     public moveMouth(toFrameIndex: number, frameDelay: number) {
         let dragonMouthChange: number;
 
-        if (this.dragonMouthIndex < toFrameIndex) {
+        if (this.mouthIndex < toFrameIndex) {
             dragonMouthChange = 1
         } else {
             dragonMouthChange = -1
         }
-        while (this.dragonMouthIndex != toFrameIndex) {
-            this.dragonMouthIndex += dragonMouthChange
-            this.dragonHead.setImage(custom.getFrame(this.dragonHeadAnimation, this.dragonMouthIndex))
+        while (this.mouthIndex != toFrameIndex) {
+            this.mouthIndex += dragonMouthChange
+            this.head.setImage(custom.getFrame(this.headAnimation, this.mouthIndex))
             pause(frameDelay)
         }
     }
 
     public moveNeck(toFrameIndex: number, frameDelay: number) {
-        let dragonNeckChange: number;
+        let neckChange: number;
 
         if (toFrameIndex < 0) {
             toFrameIndex = 0;
         }
-        else if (toFrameIndex > this.dragonNeckAnimationMaxIndex) {
-            toFrameIndex = this.dragonNeckAnimationMaxIndex;
+        else if (toFrameIndex > this.neckAnimationMaxIndex) {
+            toFrameIndex = this.neckAnimationMaxIndex;
         }
 
-        if (this.dragonNeckIndex < toFrameIndex) {
-            dragonNeckChange = 1
+        if (this.neckIndex < toFrameIndex) {
+            neckChange = 1
         } else {
-            dragonNeckChange = -1
+            neckChange = -1
         }
 
-        while (this.dragonNeckIndex != toFrameIndex) {
-            this.dragonNeckIndex += dragonNeckChange
-            this.dragonNeck.setImage(custom.getFrame(this.dragonNeckAnimation, this.dragonNeckIndex))
-            this.dragonHead.x += -8 * dragonNeckChange / 33
-            this.dragonHead.y += 30 * dragonNeckChange / 33
+        while (this.neckIndex != toFrameIndex) {
+            this.neckIndex += neckChange
+            this.neck.setImage(custom.getFrame(this.neckAnimation, this.neckIndex))
+            this.head.x += -8 * neckChange / 33
+            this.head.y += 30 * neckChange / 33
             pause(frameDelay)
         }
     }
@@ -404,11 +392,11 @@ class Dragon {
     public shootFire(kind: number): Sprite {
         let fire: Sprite;
 
-        if (this.dragonMouthIndex == this.dragonHeadAnimationMaxIndex) {
-            fire = sprites.createProjectileFromSprite(this.dragonFireImage, this.dragonHead, -100, 0)
+        if (this.mouthIndex == this.headAnimationMaxIndex) {
+            fire = sprites.createProjectileFromSprite(this.fireImage, this.head, -100, 0)
             fire.setKind(kind)
             fire.y += 3.5
-            fire.x += 4
+            fire.x += 2
         }
 
         return fire;
