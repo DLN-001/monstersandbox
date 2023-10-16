@@ -3,35 +3,6 @@ namespace myImages {
 
     helpers._registerFactory("image", function(name: string) {
         switch(helpers.stringTrim(name)) {
-            case "image3":
-            case "WizBackward":return img`
-..........ffffff.
-.........f888888f
-.......ff88888f8f
-....fff888888f.f.
-...f881f1f888f...
-.ff8ff1111888f...
-feef..fdddd188ff.
-feeef.f1dd111888f
-.ffef.fddddd1fff.
-..fef.ffddfd1f...
-.feef.ffddfd1f...
-.fef..fd11d11f...
-.fef..f1ff1188f..
-.fef..f11111888f.
-.fef.ff111188f8f.
-.feff88111188ff..
-.fdf8888118888f..
-.fdf88f88188888f.
-.fef88f88888f88f.
-.fef8ff888df888f.
-.feff.f888df888f.
-.fef..f8888f88f..
-.fef..f88888fff..
-.fef..f88888888f.
-.fef..ff88fff888f
-.fef.feeffeefffff
-`;
             case "image13":
             case "Fire":return img`
 . . . . . . . . . . . . . . . . 
