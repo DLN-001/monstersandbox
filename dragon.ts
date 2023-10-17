@@ -4,38 +4,26 @@
 * Read more at https://arcade.makecode.com/blocks/custom
 */
 
+enum DragonScriptEnum {
+    //% block="intro"
+    Intro,
+    //% block="death"
+    Death
+}
+
+enum DragonMovementEnum {
+    //% block="forwards"
+    Forward,
+    //% block="backwards"
+    Backwards
+}
+
 /**
  * Custom blocks
  */
 //*https://fontawesome.com/v4/icons/
 //% weight=100 color=#0fbc11 icon="\uf06d"
 namespace dragon {
-
-    /**
-     * Returns a single frame from an image array.
-     * @param frames the frames array
-     * @param frameNumber the frame number to get
-     */
-    //% block
-    export function getFrame(frames: Image[], frameNumber: number): Image {
-
-        if (frameNumber < 0) {
-            throw "Requested frame less than zero";
-        } else if (frameNumber > frames.length - 1) {
-            throw "Requested frame greater than frames length."
-        }
-
-        return frames.get(frameNumber)
-    }
-
-    /**
-     * Returns a maximum index for an image array.
-     * @param frames the frames array
-     */
-    //% block
-    export function getMaxFrameIndex(frames: Image[]): number {
-        return frames.length - 1
-    }
 
     /**
      * Creates a new dragon
@@ -114,7 +102,7 @@ namespace dragon {
     * @param dragon
     * @param kind
     */
-    //% blockId=dragonShootFire block="$dragon=variables_get(myDragon) shoot fire of kind $kind=spritekind"
+    //% blockId=dragonShootFire block="have $dragon=variables_get(myDragon) shoot fire of kind $kind=spritekind"
     //% group="Head" 
     export function shootFire(dragon: Dragon, kind: number): void {
         dragon.shootFire(kind);
@@ -163,31 +151,25 @@ namespace dragon {
     }
 
     /**
-    * Moves the dragon backwards
+    * Moves the dragon
     * @param dragon
+    * @param direction
     * @param xLength, eg: 18
     * @param frameDelay
     */
-    //% blockId=dragonMoveBackwards block="move $dragon=variables_get(myDragon) backwards x $xLength length || frame delay $frameDelay"
-    //% group="Movement" 
-    //% xLength.min=4 xLength.max=18
-    export function moveBackwards(dragon: Dragon, xLength: number, frameDelay = 100) {
-        if(xLength > 0) {
-            dragon.moveBackwards(xLength, frameDelay);
-        }
-    }
-
-    /**
-    * Moves the dragon forwards
-    * @param dragon
-    * @param xLength, eg: 18
-    * @param frameDelay
-    */
-    //% blockId=dragonMoveForwards block="move $dragon=variables_get(myDragon) forwards x $xLength length || frame delay $frameDelay"
+    //% blockId=dragonMove block="move $dragon=variables_get(myDragon) $direction x $xLength length || frame delay $frameDelay"
     //% group="Movement"
+    //% inlineInputMode=inline
     //% xLength.min=4 xLength.max=18
-    export function moveForwards(dragon: Dragon, xLength: number, frameDelay = 100) {
-        dragon.moveForwards(xLength, frameDelay);
+    export function moveForwards(dragon: Dragon, direction: DragonMovementEnum, xLength: number, frameDelay = 100) {
+        if (xLength >= 4 && xLength <= 18) {
+            if (direction == DragonMovementEnum.Forward) {
+                dragon.moveForwards(xLength, frameDelay);
+            }
+            else if (direction == DragonMovementEnum.Backwards) {
+                dragon.moveBackwards(xLength, frameDelay);
+            }
+        }
     }
 
     /**
@@ -196,30 +178,26 @@ namespace dragon {
     * @param msToRoar, eg: 1000
     * @param pixelsToShake, eg: 4
     */
-    //% blockId=dragonRoar block="$dragon=variables_get(myDragon) roar || milliseconds to roar $msToRoar pixels to shake $pixelsToShake"
+    //% blockId=dragonRoar block="have $dragon=variables_get(myDragon) roar || milliseconds to roar $msToRoar pixels to shake $pixelsToShake"
     //% group="Sound"
     export function roar(dragon: Dragon, msToRoar = 1000, pixelsToShake = 2) {
         dragon.roar(msToRoar, pixelsToShake)
     }
 
     /**
-    * Makes the dragon perform the standard intro script
+    * Makes the dragon perform a script
     * @param dragon
+    * @param script
     */
-    //% blockId=dragonIntro block="$dragon=variables_get(myDragon) perform intro script"
+    //% blockId=dragonPerformScript block="have $dragon=variables_get(myDragon) perform $script script"
     //% group="Scripts"
-    export function dragonIntro(dragon: Dragon) {
-        dragon.intro();
-    }
-
-    /**
-    * Makes the dragon perform the standard death script
-    * @param dragon
-    */
-    //% blockId=dragonDeath block="$dragon=variables_get(myDragon) perform death script"
-    //% group="Scripts"
-    function dragonDeath(dragon: Dragon) {
-        dragon.death();
+    export function dragonPerformScript(dragon: Dragon, script: DragonScriptEnum) {
+        if (script == DragonScriptEnum.Intro) {
+            dragon.performIntroScript();
+        }
+        else if (script == DragonScriptEnum.Death) {
+            dragon.performDeathScript();
+        }
     }
 }
 
@@ -280,25 +258,25 @@ class Dragon {
         this.kind = kind;
 
         this.headAnimation = assets.animation`DragonHead`;
-        this.headAnimationMaxIndex = custom.getMaxFrameIndex(this.headAnimation);
+        this.headAnimationMaxIndex = this.getMaxFrameIndex(this.headAnimation);
         this.headAnimationDeath1 = assets.animation`DragonHeadDeath1`;
-        this.headAnimationDeath1MaxIndex = custom.getMaxFrameIndex(this.headAnimationDeath1);
+        this.headAnimationDeath1MaxIndex = this.getMaxFrameIndex(this.headAnimationDeath1);
         this.headAnimationDeath2 = assets.animation`DragonHeadDeath2`;
-        this.headAnimationDeath2MaxIndex = custom.getMaxFrameIndex(this.headAnimationDeath2);
+        this.headAnimationDeath2MaxIndex = this.getMaxFrameIndex(this.headAnimationDeath2);
         this.neckAnimation = assets.animation`DragonNeck`;
-        this.neckAnimationMaxIndex = custom.getMaxFrameIndex(this.neckAnimation);
+        this.neckAnimationMaxIndex = this.getMaxFrameIndex(this.neckAnimation);
         this.bodyAnimation = assets.animation`DragonBody`;
-        this.bodyAnimationMaxIndex = custom.getMaxFrameIndex(this.bodyAnimation);
+        this.bodyAnimationMaxIndex = this.getMaxFrameIndex(this.bodyAnimation);
         this.wingAnimation = assets.animation`DragonWing`;
-        this.wingAnimationMaxIndex = custom.getMaxFrameIndex(this.wingAnimation);
+        this.wingAnimationMaxIndex = this.getMaxFrameIndex(this.wingAnimation);
         this.wingAnimationDeath = assets.animation`DragonWingDeath`;
-        this.wingAnimationDeathMaxIndex = custom.getMaxFrameIndex(this.wingAnimationDeath);
+        this.wingAnimationDeathMaxIndex = this.getMaxFrameIndex(this.wingAnimationDeath);
         this.legFrontAnimation = assets.animation`DragonLegFront`;
-        this.legFrontAnimationMaxIndex = custom.getMaxFrameIndex(this.legFrontAnimation);
+        this.legFrontAnimationMaxIndex = this.getMaxFrameIndex(this.legFrontAnimation);
         this.legBackAnimation = assets.animation`DragonLegBack`;
-        this.legBackAnimationMaxIndex = custom.getMaxFrameIndex(this.legBackAnimation);
+        this.legBackAnimationMaxIndex = this.getMaxFrameIndex(this.legBackAnimation);
         this.tailAnimation = assets.animation`DragonTail`;
-        this.tailAnimationMaxIndex = custom.getMaxFrameIndex(this.tailAnimation);
+        this.tailAnimationMaxIndex = this.getMaxFrameIndex(this.tailAnimation);
 
         this.headDead = assets.image`dragonDead1`
         this.fireImage = assets.image`Fire`;
@@ -468,7 +446,7 @@ class Dragon {
         scene.cameraShake(pixelsToShake, msToRoar * 1.5)
     }
 
-    public intro() {
+    public performIntroScript() {
         for (let index = 0; index < 4; index++) {
             this.moveForwards(18, 100)
         }
@@ -518,7 +496,7 @@ class Dragon {
         }
     }
 
-    public death() {
+    public performDeathScript() {
         this.moveNeck(0, 10)
         this.moveMouth(0, 10)
         this.moveLegPair(this.legBack1, this.legFront1, true, 4, 100)
@@ -545,4 +523,8 @@ class Dragon {
         scene.cameraShake(8, 500)
         this.weaken(30, true, 0)
     }
+
+    private getMaxFrameIndex(frames: Image[]): number {
+        return frames.length - 1
+    }   
 }

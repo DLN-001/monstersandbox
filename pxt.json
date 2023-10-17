@@ -18,7 +18,6 @@
         "images.g.jres",
         "images.g.ts",
         "main.py",
-        "custom.ts",
         "dragon.ts"
     ],
     "testFiles": [
