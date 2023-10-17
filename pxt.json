@@ -2,11 +2,7 @@
     "name": "Dragon",
     "description": "",
     "dependencies": {
-        "device": "*",
-        "sprite-scaling": "*",
-        "darts": "*",
-        "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.24",
-        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.2"
+        "device": "*"
     },
     "files": [
         "main.blocks",
