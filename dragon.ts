@@ -279,8 +279,8 @@ class Dragon {
         this.tailAnimation = assets.animation`DragonTail`;
         this.tailAnimationMaxIndex = this.getMaxFrameIndex(this.tailAnimation);
 
-        this.headDead1 = assets.image`dragonDead1`
-        this.headDead2 = assets.image`dragonDead2`
+        this.headDead1 = assets.image`DragonDead1`
+        this.headDead2 = assets.image`DragonDead2`
         this.fireImage = assets.image`Fire`;
 
         this.neck = sprites.create(this.neckAnimation[0], this.kind);
