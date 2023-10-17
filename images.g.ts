@@ -22,35 +22,6 @@ namespace myImages {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `;
-            case "urkeI2_9PUi0*iER]%*f":
-            case "WizForward":return img`
-.ffffff.........
-f888888f........
-f8f88888ff......
-.f.f888888fff...
-...f888f1f188f..
-...f8881111ff8ff
-.ff881ddddf..fef
-f888111dd1f.feef
-.fff1dddddf.feff
-...f1dfddff.fef.
-...f1dfddff.feef
-...f11d11df..fef
-..f8811ff1f..fef
-.f88811111f..fef
-.f8f881111ff.fef
-..ff88111188ffef
-..f8888118888fdf
-.f88888188f88fdf
-.f88f88888f88fef
-.f888fd888ff8fef
-.f888fd888f.ffef
-..f88f8888f..fef
-..fff88888f..fef
-.f88888888f..fef
-f888fff88ff..fef
-fffffeeffeef.fef
-`;
             case "image1":
             case "dragonDead1":return img`
 ................................................

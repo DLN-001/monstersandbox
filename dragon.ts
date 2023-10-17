@@ -240,7 +240,8 @@ class Dragon {
     private tailAnimationMaxIndex: number;
 
     //*Images
-    private headDead: Image;
+    private headDead1: Image;
+    private headDead2: Image;
     private fireImage: Image;
 
     //*Sprites
@@ -278,7 +279,8 @@ class Dragon {
         this.tailAnimation = assets.animation`DragonTail`;
         this.tailAnimationMaxIndex = this.getMaxFrameIndex(this.tailAnimation);
 
-        this.headDead = assets.image`dragonDead1`
+        this.headDead1 = assets.image`dragonDead1`
+        this.headDead2 = assets.image`dragonDead2`
         this.fireImage = assets.image`Fire`;
 
         this.neck = sprites.create(this.neckAnimation[0], this.kind);
@@ -519,9 +521,10 @@ class Dragon {
         pause(250)
         this.moveMouthDeath2(0, 10)
         pause(250)
-        this.head.setImage(this.headDead)
+        this.head.setImage(this.headDead1)
         scene.cameraShake(8, 500)
         this.weaken(30, true, 0)
+        this.head.setImage(this.headDead2)
     }
 
     private getMaxFrameIndex(frames: Image[]): number {
