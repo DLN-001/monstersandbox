@@ -81,8 +81,8 @@ function dragonMoveLeg (myLegSprite: Sprite, myForwardIndicator: boolean, stepLe
     pause(10)
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    dragon.openMouth(myDragon)
-    dragon.shootFire(myDragon, SpriteKind.Dragon_Fire_Kind)
+    dragon.moveForwards(myDragon, 900)
+    dragon.moveNeck(myDragon, dragon.getMaxNeckPosition(myDragon))
 })
 function dragonMoveMouth (mouthIndex: number, mouthDelay: number, mouthImageList: any[]) {
     if (DragonMouthIndex < mouthIndex) {

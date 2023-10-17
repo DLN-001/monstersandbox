@@ -141,28 +141,53 @@ namespace dragon {
         return dragon.getNeckAnimationMaxIndex();
     }
 
-    function dragonMoveLeg(myLegSprite: Sprite, myForwardIndicator: boolean, stepLength: number) {
-        DragonLegStepX = stepLength
-        if (myForwardIndicator) {
-            DragonLegStepX = DragonLegStepX * -1
-        }
-        myLegSprite.y += -4
-        myLegSprite.x += DragonLegStepX
-        DragonBody.x += DragonLegStepX / 4
-        DragonTail.x += DragonLegStepX / 4
-        DragonNeck.x += DragonLegStepX / 4
-        DragonHead.x += DragonLegStepX / 4
-        DragonWingFront.x += DragonLegStepX / 4
-        pause(100)
-        myLegSprite.y += 4
-        pause(10)
+    /**
+    * Moves the dragon's wing
+    * @param dragon
+    * @param frameDelay
+    */
+    //% blockId=dragonMoveWing block="move $dragon=variables_get(myDragon) wing to position number %index || frame delay $frameDelay"
+    //% group="Wing" 
+    export function moveWing(dragon: Dragon, index: number, frameDelay = 100): void {
+        dragon.moveWing(index, frameDelay)
     }
 
-    function dragonMoveBackward(stepLength: number) {
-        dragonMoveLegPair(DragonLegFront2, DragonLegBack2, false, stepLength)
-        pause(100)
-        dragonMoveLegPair(DragonLegFront1, DragonLegBack1, false, stepLength)
-        pause(100)
+    /**
+    * Get the max dragon wing position
+    * @param dragon
+    */
+    //% blockId=dragonGetMaxWingPos block="get $dragon=variables_get(myDragon) max wing position"
+    //% group="Wing" 
+    export function getMaxWingPosition(dragon: Dragon): number {
+        return dragon.getWingAnimationMaxIndex();
+    }
+
+    /**
+    * Moves the dragon backwards
+    * @param dragon
+    * @param xLength, eg: 18
+    * @param frameDelay
+    */
+    //% blockId=dragonMoveBackwards block="move $dragon=variables_get(myDragon) backwards x %xLength length || frame delay $frameDelay"
+    //% group="Movement" 
+    //% xLength.min=4 xLength.max=18
+    export function moveBackwards(dragon: Dragon, xLength: number, frameDelay = 100) {
+        if(xLength > 0) {
+            dragon.moveBackwards(xLength, frameDelay);
+        }
+    }
+
+    /**
+    * Moves the dragon forwards
+    * @param dragon
+    * @param xLength, eg: 18
+    * @param frameDelay
+    */
+    //% blockId=dragonMoveForwards block="move $dragon=variables_get(myDragon) forwards x %xLength length || frame delay $frameDelay"
+    //% group="Movement"
+    //% xLength.min=4 xLength.max=18
+    export function moveForwards(dragon: Dragon, xLength: number, frameDelay = 100) {
+        dragon.moveForwards(xLength, frameDelay);
     }
 
     function dragonIntro() {
@@ -213,18 +238,8 @@ namespace dragon {
             pause(msDelay)
         }
     }
-    function dragonFlapWings() {
-        dragonMoveWing(custom.getMaxFrameIndex(assets.animation`DragonWing`), 10)
-        Hero.ax = -50
-        dragonMoveWing(0, 10)
-        Hero.ax = 0
-    }
-    function dragonMoveForward(stepLength: number) {
-        dragonMoveLegPair(DragonLegBack1, DragonLegFront1, true, stepLength)
-        pause(100)
-        dragonMoveLegPair(DragonLegBack2, DragonLegFront2, true, stepLength)
-        pause(100)
-    }
+
+
     function dragonRoar(msToRoar: number, pixelsToShake: number) {
         music.play(music.createSoundEffect(
             WaveShape.Noise,
@@ -237,13 +252,6 @@ namespace dragon {
             InterpolationCurve.Curve
         ), music.PlaybackMode.InBackground)
         scene.cameraShake(pixelsToShake, msToRoar * 1.5)
-    }
-    function dragonMoveLegPair(myFirstLegSprite: Sprite, mySecondLegSprite: Sprite, myForwardIndicator: boolean, stepLength: number) {
-        dragonMoveLeg(myFirstLegSprite, myForwardIndicator, stepLength)
-        pause(100)
-        dragonMoveLeg(mySecondLegSprite, myForwardIndicator, stepLength)
-        scene.cameraShake(2, 100)
-        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
     }
 
     function dragonDeath() {
@@ -273,18 +281,7 @@ namespace dragon {
         scene.cameraShake(8, 500)
         dragonWeaken(30, true, 0)
     }
-    function dragonMoveWing(wingIndex: number, wingDelay: number) {
-        if (DragonWingIndex < wingIndex) {
-            DragonWingChange = 1
-        } else {
-            DragonWingChange = -1
-        }
-        while (!(DragonWingIndex == wingIndex)) {
-            DragonWingIndex += DragonWingChange
-            DragonWingFront.setImage(custom.getFrame(assets.animation`DragonWing`, DragonWingIndex))
-            pause(wingDelay)
-        }
-    }
+
 }
 
 /**
@@ -318,6 +315,8 @@ class Dragon {
     private headAnimationMaxIndex: number;
     private neckAnimation: Image[];
     private neckAnimationMaxIndex: number;
+    private wingAnimation: Image[];
+    private wingAnimationMaxIndex: number;
     private fireImage: Image;
 
     public constructor(kind: number) {
@@ -339,6 +338,8 @@ class Dragon {
         this.headAnimationMaxIndex = custom.getMaxFrameIndex(this.headAnimation);
         this.neckAnimation = assets.animation`DragonNeck`;
         this.neckAnimationMaxIndex = custom.getMaxFrameIndex(this.neckAnimation);
+        this.wingAnimation = assets.animation`DragonWing`;
+        this.wingAnimationMaxIndex = custom.getMaxFrameIndex(this.wingAnimation);
     }
 
     public getHeadAnimationMaxIndex() {
@@ -382,7 +383,7 @@ class Dragon {
 
         while (this.neckIndex != toFrameIndex) {
             this.neckIndex += neckChange
-            this.neck.setImage(custom.getFrame(this.neckAnimation, this.neckIndex))
+            this.neck.setImage(this.neckAnimation[this.neckIndex])
             this.head.x += -8 * neckChange / 33
             this.head.y += 30 * neckChange / 33
             pause(frameDelay)
@@ -400,5 +401,72 @@ class Dragon {
         }
 
         return fire;
+    }
+
+    public moveWing(toFrameIndex: number, frameDelay: number) {
+        let wingChange: number;
+
+        if (toFrameIndex < 0) {
+            toFrameIndex = 0;
+        }
+        else if (toFrameIndex > this.wingAnimationMaxIndex) {
+            toFrameIndex = this.wingAnimationMaxIndex;
+        }
+
+        if (this.wingIndex < toFrameIndex) {
+            wingChange = 1
+        } else {
+            wingChange = -1
+        }
+        while (this.wingIndex != toFrameIndex) {
+            this.wingIndex += wingChange
+            this.wingFront.setImage(this.wingAnimation[this.wingIndex])
+            pause(frameDelay)
+        }
+    }
+
+    public getWingAnimationMaxIndex() {
+        return this.wingAnimationMaxIndex;
+    }
+
+    private moveLeg(legSprite: Sprite, forwardIndicator: boolean, stepLength: number, frameDelay: number) {
+        let stepLengthX = stepLength;
+
+        if (forwardIndicator) {
+            stepLengthX = stepLengthX * -1
+        }
+
+        legSprite.y += -4;
+        legSprite.x += stepLengthX;
+        this.body.x += stepLengthX / 4;
+        this.tail.x += stepLengthX / 4;
+        this.neck.x += stepLengthX / 4;
+        this.head.x += stepLengthX / 4;
+        this.wingFront.x += stepLengthX / 4;
+        pause(frameDelay);
+        legSprite.y += 4;
+        pause(frameDelay/10);
+    }
+
+    private moveLegPair(firstLegSprite: Sprite, secondLegSprite: Sprite, forwardIndicator: boolean, stepLength: number, frameDelay: number) {
+        this.moveLeg(firstLegSprite, forwardIndicator, stepLength, frameDelay);
+        pause(frameDelay);
+        this.moveLeg(secondLegSprite, forwardIndicator, stepLength, frameDelay);
+        scene.cameraShake(2, frameDelay);
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone);
+    }
+
+    public moveBackwards(xLength: number, frameDelay: number) {
+        this.moveLegPair(this.legFront2, this.legBack2, false, xLength, frameDelay);
+        pause(frameDelay);
+        this.moveLegPair(this.legFront1, this.legBack1, false, xLength, frameDelay);
+        pause(frameDelay);
+    }
+
+    public moveForwards(xLength: number, frameDelay: number) {
+        this.moveLegPair(this.legBack1, this.legFront1, true, xLength, frameDelay);
+        pause(frameDelay);
+        this.moveLegPair(this.legBack2, this.legFront2, true, xLength, frameDelay);
+        pause(frameDelay);
     }
 }
