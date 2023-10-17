@@ -203,49 +203,23 @@ namespace dragon {
     }
 
     /**
-    * Makes the dragon perform the standard intro
+    * Makes the dragon perform the standard intro script
     * @param dragon
     */
-    //% blockId=dragonIntro block="$dragon=variables_get(myDragon) perform intro"
+    //% blockId=dragonIntro block="$dragon=variables_get(myDragon) perform intro script"
     //% group="Scripts"
     export function dragonIntro(dragon: Dragon) {
-        for (let index = 0; index < 4; index++) {
-            dragon.moveForwards(18, 100)
-        }
-        pause(500)
-        dragon.roar(1000, 4)
-        dragon.moveMouth(dragon.getHeadAnimationMaxIndex(), 10)
-        pause(1300)
-        dragon.moveMouth(0, 10)
-        pause(1000)
+        dragon.intro();
     }
 
-    function dragonDeath() {
-        dragonMoveNeck(0, 10)
-        dragonMoveMouth(0, 10, assets.animation`DragonHead`)
-        dragonMoveLegPair(DragonLegBack1, DragonLegFront1, true, 4)
-        DragonHead.setImage(custom.getFrame(assets.animation`DragonHeadDeath1`, 0))
-        dragonWeaken(2, false, 10)
-        pause(100)
-        dragonMoveLegPair(DragonLegBack2, DragonLegFront2, true, 4)
-        dragonWeaken(2, false, 10)
-        pause(500)
-        dragonMoveBackward(2)
-        dragonWeaken(2, false, 10)
-        dragonRoar(500, 2)
-        dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHeadDeath1`), 10, assets.animation`DragonHeadDeath1`)
-        pause(500)
-        dragonMoveMouth(0, 10, assets.animation`DragonHeadDeath1`)
-        pause(250)
-        dragonMoveForward(2)
-        dragonRoar(250, 0)
-        dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHeadDeath0`), 10, assets.animation`DragonHeadDeath0`)
-        pause(250)
-        dragonMoveMouth(0, 10, assets.animation`DragonHeadDeath0`)
-        pause(250)
-        DragonHead.setImage(assets.image`dragonDead1`)
-        scene.cameraShake(8, 500)
-        dragonWeaken(30, true, 0)
+    /**
+    * Makes the dragon perform the standard death script
+    * @param dragon
+    */
+    //% blockId=dragonDeath block="$dragon=variables_get(myDragon) perform death script"
+    //% group="Scripts"
+    function dragonDeath(dragon: Dragon) {
+        dragon.death();
     }
 }
 
@@ -268,6 +242,10 @@ class Dragon {
     //*Animations
     private headAnimation: Image[];
     private headAnimationMaxIndex: number;
+    private headAnimationDeath1: Image[];
+    private headAnimationDeath1MaxIndex: number;
+    private headAnimationDeath2: Image[];
+    private headAnimationDeath2MaxIndex: number;
     private neckAnimation: Image[];
     private neckAnimationMaxIndex: number;
     private bodyAnimation: Image[];
@@ -284,6 +262,7 @@ class Dragon {
     private tailAnimationMaxIndex: number;
 
     //*Images
+    private headDead: Image;
     private fireImage: Image;
 
     //*Sprites
@@ -302,6 +281,10 @@ class Dragon {
 
         this.headAnimation = assets.animation`DragonHead`;
         this.headAnimationMaxIndex = custom.getMaxFrameIndex(this.headAnimation);
+        this.headAnimationDeath1 = assets.animation`DragonHeadDeath1`;
+        this.headAnimationDeath1MaxIndex = custom.getMaxFrameIndex(this.headAnimationDeath1);
+        this.headAnimationDeath2 = assets.animation`DragonHeadDeath2`;
+        this.headAnimationDeath2MaxIndex = custom.getMaxFrameIndex(this.headAnimationDeath2);
         this.neckAnimation = assets.animation`DragonNeck`;
         this.neckAnimationMaxIndex = custom.getMaxFrameIndex(this.neckAnimation);
         this.bodyAnimation = assets.animation`DragonBody`;
@@ -317,6 +300,7 @@ class Dragon {
         this.tailAnimation = assets.animation`DragonTail`;
         this.tailAnimationMaxIndex = custom.getMaxFrameIndex(this.tailAnimation);
 
+        this.headDead = assets.image`dragonDead1`
         this.fireImage = assets.image`Fire`;
 
         this.neck = sprites.create(this.neckAnimation[0], this.kind);
@@ -339,6 +323,18 @@ class Dragon {
     }
 
     public moveMouth(toFrameIndex: number, frameDelay: number) {
+        this.moveMouthWithAnimation(this.headAnimation, toFrameIndex, frameDelay);
+    }
+
+    private moveMouthDeath1(toFrameIndex: number, frameDelay: number) {
+        this.moveMouthWithAnimation(this.headAnimationDeath1, toFrameIndex, frameDelay);
+    }
+
+    private moveMouthDeath2(toFrameIndex: number, frameDelay: number) {
+        this.moveMouthWithAnimation(this.headAnimationDeath2, toFrameIndex, frameDelay);
+    }
+
+    private moveMouthWithAnimation(animation: Image[], toFrameIndex: number, frameDelay: number) {
         let dragonMouthChange: number;
 
         if (this.mouthIndex < toFrameIndex) {
@@ -348,7 +344,7 @@ class Dragon {
         }
         while (this.mouthIndex != toFrameIndex) {
             this.mouthIndex += dragonMouthChange
-            this.head.setImage(custom.getFrame(this.headAnimation, this.mouthIndex))
+            this.head.setImage(animation[this.mouthIndex])
             pause(frameDelay)
         }
     }
@@ -472,6 +468,18 @@ class Dragon {
         scene.cameraShake(pixelsToShake, msToRoar * 1.5)
     }
 
+    public intro() {
+        for (let index = 0; index < 4; index++) {
+            this.moveForwards(18, 100)
+        }
+        pause(500)
+        this.roar(1000, 4)
+        this.moveMouth(this.getHeadAnimationMaxIndex(), 10)
+        pause(1300)
+        this.moveMouth(0, 10)
+        pause(1000)
+    }
+
     private weaken(framesToProcess: number, moveNeckIndicator: boolean, frameDelay: number) {
         for (let index = 0; index < framesToProcess; index++) {
             if (moveNeckIndicator) {
@@ -508,5 +516,33 @@ class Dragon {
             }
             pause(frameDelay)
         }
+    }
+
+    public death() {
+        this.moveNeck(0, 10)
+        this.moveMouth(0, 10)
+        this.moveLegPair(this.legBack1, this.legFront1, true, 4, 100)
+        this.head.setImage(this.headAnimationDeath1[0])
+        this.weaken(2, false, 10)
+        pause(100)
+        this.moveLegPair(this.legBack2, this.legFront2, true, 4, 100)
+        this.weaken(2, false, 10)
+        pause(500)
+        this.moveBackwards(2, 100)
+        this.weaken(2, false, 10)
+        this.roar(500, 2)
+        this.moveMouthDeath1(this.headAnimationDeath1MaxIndex, 10)
+        pause(500)
+        this.moveMouthDeath1(0, 10)
+        pause(250)
+        this.moveForwards(2, 100)
+        this.roar(250, 0)
+        this.moveMouthDeath2(this.headAnimationDeath2MaxIndex, 10)
+        pause(250)
+        this.moveMouthDeath2(0, 10)
+        pause(250)
+        this.head.setImage(this.headDead)
+        scene.cameraShake(8, 500)
+        this.weaken(30, true, 0)
     }
 }
