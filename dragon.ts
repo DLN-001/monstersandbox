@@ -8,7 +8,7 @@
  * Custom blocks
  */
 //*https://fontawesome.com/v4/icons/
-//% weight=100 color=#0fbc11 icon="\uf0e7"
+//% weight=100 color=#0fbc11 icon="\uf06d"
 namespace dragon {
 
     /**
@@ -43,7 +43,7 @@ namespace dragon {
      * @param col the initial col position
      * @param row the initial row position
      */
-    //% blockId=dragonCreate block="dragon of kind %kind=spritekind"
+    //% blockId=dragonCreate block="dragon of kind $kind=spritekind"
     //% expandableArgumentMode=toggle
     //% inlineInputMode=inline
     //% blockSetVariable=myDragon
@@ -114,7 +114,7 @@ namespace dragon {
     * @param dragon
     * @param kind
     */
-    //% blockId=dragonShootFire block="$dragon=variables_get(myDragon) shoot fire of kind %kind=spritekind"
+    //% blockId=dragonShootFire block="$dragon=variables_get(myDragon) shoot fire of kind $kind=spritekind"
     //% group="Head" 
     export function shootFire(dragon: Dragon, kind: number): void {
         dragon.shootFire(kind);
@@ -125,7 +125,7 @@ namespace dragon {
     * @param dragon
     * @param frameDelay
     */
-    //% blockId=dragonMoveNeck block="move $dragon=variables_get(myDragon) neck to position number %index || frame delay $frameDelay"
+    //% blockId=dragonMoveNeck block="move $dragon=variables_get(myDragon) neck to position number $index || frame delay $frameDelay"
     //% group="Neck" 
     export function moveNeck(dragon: Dragon, index: number, frameDelay = 100): void {
         dragon.moveNeck(index, frameDelay)
@@ -146,7 +146,7 @@ namespace dragon {
     * @param dragon
     * @param frameDelay
     */
-    //% blockId=dragonMoveWing block="move $dragon=variables_get(myDragon) wing to position number %index || frame delay $frameDelay"
+    //% blockId=dragonMoveWing block="move $dragon=variables_get(myDragon) wing to position number $index || frame delay $frameDelay"
     //% group="Wing" 
     export function moveWing(dragon: Dragon, index: number, frameDelay = 100): void {
         dragon.moveWing(index, frameDelay)
@@ -168,7 +168,7 @@ namespace dragon {
     * @param xLength, eg: 18
     * @param frameDelay
     */
-    //% blockId=dragonMoveBackwards block="move $dragon=variables_get(myDragon) backwards x %xLength length || frame delay $frameDelay"
+    //% blockId=dragonMoveBackwards block="move $dragon=variables_get(myDragon) backwards x $xLength length || frame delay $frameDelay"
     //% group="Movement" 
     //% xLength.min=4 xLength.max=18
     export function moveBackwards(dragon: Dragon, xLength: number, frameDelay = 100) {
@@ -183,75 +183,41 @@ namespace dragon {
     * @param xLength, eg: 18
     * @param frameDelay
     */
-    //% blockId=dragonMoveForwards block="move $dragon=variables_get(myDragon) forwards x %xLength length || frame delay $frameDelay"
+    //% blockId=dragonMoveForwards block="move $dragon=variables_get(myDragon) forwards x $xLength length || frame delay $frameDelay"
     //% group="Movement"
     //% xLength.min=4 xLength.max=18
     export function moveForwards(dragon: Dragon, xLength: number, frameDelay = 100) {
         dragon.moveForwards(xLength, frameDelay);
     }
 
-    function dragonIntro() {
+    /**
+    * Makes the dragon roar
+    * @param dragon
+    * @param msToRoar, eg: 1000
+    * @param pixelsToShake, eg: 4
+    */
+    //% blockId=dragonRoar block="$dragon=variables_get(myDragon) roar || milliseconds to roar $msToRoar pixels to shake $pixelsToShake"
+    //% group="Sound"
+    export function roar(dragon: Dragon, msToRoar = 1000, pixelsToShake = 2) {
+        dragon.roar(msToRoar, pixelsToShake)
+    }
+
+    /**
+    * Makes the dragon perform the standard intro
+    * @param dragon
+    */
+    //% blockId=dragonIntro block="$dragon=variables_get(myDragon) perform intro"
+    //% group="Scripts"
+    export function dragonIntro(dragon: Dragon) {
         for (let index = 0; index < 4; index++) {
-            dragonMoveForward(18)
+            dragon.moveForwards(18, 100)
         }
         pause(500)
-        dragonRoar(1000, 4)
-        dragonMoveMouth(custom.getMaxFrameIndex(assets.animation`DragonHead`), 10, assets.animation`DragonHead`)
+        dragon.roar(1000, 4)
+        dragon.moveMouth(dragon.getHeadAnimationMaxIndex(), 10)
         pause(1300)
-        dragonMoveMouth(0, 10, assets.animation`DragonHead`)
+        dragon.moveMouth(0, 10)
         pause(1000)
-    }
-
-    function dragonWeaken(framesToProcess: number, moveNeckIndicator: boolean, msDelay: number) {
-        for (let index = 0; index < framesToProcess; index++) {
-            if (moveNeckIndicator) {
-                if (DragonNeckIndex + 4 < custom.getMaxFrameIndex(assets.animation`neck`)) {
-                    dragonMoveNeck(DragonNeckIndex + 4, 0)
-                } else if (DragonNeckIndex < custom.getMaxFrameIndex(assets.animation`neck`)) {
-                    dragonMoveNeck(DragonNeckIndex + 1, 0)
-                }
-            }
-            if (DragonWingIndex < custom.getMaxFrameIndex(assets.animation`DragonWingDeath`)) {
-                DragonWingIndex += 1
-                DragonWingFront.setImage(custom.getFrame(assets.animation`DragonWingDeath`, DragonWingIndex))
-            }
-            if (DragonBodyIndex < custom.getMaxFrameIndex(assets.animation`DragonBody`)) {
-                DragonNeck.y += 1
-                DragonHead.y += 1
-                DragonBodyIndex += 1
-                DragonBody.setImage(custom.getFrame(assets.animation`DragonBody`, DragonBodyIndex))
-            }
-            if (DragonLegFrontIndex < custom.getMaxFrameIndex(assets.animation`DragonLegFront`)) {
-                DragonLegFrontIndex += 1
-                DragonLegFront1.setImage(custom.getFrame(assets.animation`DragonLegFront`, DragonLegFrontIndex))
-                DragonLegFront2.setImage(custom.getFrame(assets.animation`DragonLegFront`, DragonLegFrontIndex))
-            }
-            if (DragonLegBackIndex < custom.getMaxFrameIndex(assets.animation`DragonLegBack`)) {
-                DragonLegBackIndex += 1
-                DragonLegBack1.setImage(custom.getFrame(assets.animation`DragonLegBack`, DragonLegBackIndex))
-                DragonLegBack2.setImage(custom.getFrame(assets.animation`DragonLegBack`, DragonLegBackIndex))
-            }
-            if (DragonTailIndex < custom.getMaxFrameIndex(assets.animation`DragonTail`)) {
-                DragonTailIndex += 1
-                DragonTail.setImage(custom.getFrame(assets.animation`DragonTail`, DragonTailIndex))
-            }
-            pause(msDelay)
-        }
-    }
-
-
-    function dragonRoar(msToRoar: number, pixelsToShake: number) {
-        music.play(music.createSoundEffect(
-            WaveShape.Noise,
-            196,
-            196,
-            255,
-            255,
-            msToRoar,
-            SoundExpressionEffect.None,
-            InterpolationCurve.Curve
-        ), music.PlaybackMode.InBackground)
-        scene.cameraShake(pixelsToShake, msToRoar * 1.5)
     }
 
     function dragonDeath() {
@@ -281,7 +247,6 @@ namespace dragon {
         scene.cameraShake(8, 500)
         dragonWeaken(30, true, 0)
     }
-
 }
 
 /**
@@ -300,6 +265,27 @@ class Dragon {
     private wingIndex = 0;
     private mouthIndex = 0;
 
+    //*Animations
+    private headAnimation: Image[];
+    private headAnimationMaxIndex: number;
+    private neckAnimation: Image[];
+    private neckAnimationMaxIndex: number;
+    private bodyAnimation: Image[];
+    private bodyAnimationMaxIndex: number;
+    private legFrontAnimation: Image[];
+    private legFrontAnimationMaxIndex: number;
+    private legBackAnimation: Image[];
+    private legBackAnimationMaxIndex: number;
+    private wingAnimation: Image[];
+    private wingAnimationMaxIndex: number;
+    private wingAnimationDeath: Image[];
+    private wingAnimationDeathMaxIndex: number;
+    private tailAnimation: Image[];
+    private tailAnimationMaxIndex: number;
+
+    //*Images
+    private fireImage: Image;
+
     //*Sprites
     public head: Sprite;
     public neck: Sprite;
@@ -311,35 +297,37 @@ class Dragon {
     public legFront2: Sprite;
     public tail: Sprite;
 
-    private headAnimation: Image[];
-    private headAnimationMaxIndex: number;
-    private neckAnimation: Image[];
-    private neckAnimationMaxIndex: number;
-    private wingAnimation: Image[];
-    private wingAnimationMaxIndex: number;
-    private fireImage: Image;
-
     public constructor(kind: number) {
         this.kind = kind;
-
-        this.neck = sprites.create(custom.getFrame(assets.animation`DragonNeck`, 0), this.kind);
-        this.head = sprites.create(custom.getFrame(assets.animation`DragonHead`, 0), this.kind);
-        this.body = sprites.create(custom.getFrame(assets.animation`DragonBody`, 0), this.kind);
-        this.tail = sprites.create(custom.getFrame(assets.animation`DragonTail`, 0), this.kind);
-        this.legFront1 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), this.kind);
-        this.legFront2 = sprites.create(custom.getFrame(assets.animation`DragonLegFront`, 0), this.kind);
-        this.legBack1 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), this.kind);
-        this.legBack2 = sprites.create(custom.getFrame(assets.animation`DragonLegBack`, 0), this.kind);
-        this.wingFront = sprites.create(custom.getFrame(assets.animation`DragonWing`, 0), this.kind);
-
-        this.fireImage = assets.image`Fire`;
 
         this.headAnimation = assets.animation`DragonHead`;
         this.headAnimationMaxIndex = custom.getMaxFrameIndex(this.headAnimation);
         this.neckAnimation = assets.animation`DragonNeck`;
         this.neckAnimationMaxIndex = custom.getMaxFrameIndex(this.neckAnimation);
+        this.bodyAnimation = assets.animation`DragonBody`;
+        this.bodyAnimationMaxIndex = custom.getMaxFrameIndex(this.bodyAnimation);
         this.wingAnimation = assets.animation`DragonWing`;
         this.wingAnimationMaxIndex = custom.getMaxFrameIndex(this.wingAnimation);
+        this.wingAnimationDeath = assets.animation`DragonWingDeath`;
+        this.wingAnimationDeathMaxIndex = custom.getMaxFrameIndex(this.wingAnimationDeath);
+        this.legFrontAnimation = assets.animation`DragonLegFront`;
+        this.legFrontAnimationMaxIndex = custom.getMaxFrameIndex(this.legFrontAnimation);
+        this.legBackAnimation = assets.animation`DragonLegBack`;
+        this.legBackAnimationMaxIndex = custom.getMaxFrameIndex(this.legBackAnimation);
+        this.tailAnimation = assets.animation`DragonTail`;
+        this.tailAnimationMaxIndex = custom.getMaxFrameIndex(this.tailAnimation);
+
+        this.fireImage = assets.image`Fire`;
+
+        this.neck = sprites.create(this.neckAnimation[0], this.kind);
+        this.head = sprites.create(this.headAnimation[0], this.kind);
+        this.body = sprites.create(this.bodyAnimation[0], this.kind);
+        this.tail = sprites.create(this.tailAnimation[0], this.kind);
+        this.legFront1 = sprites.create(this.legFrontAnimation[0], this.kind);
+        this.legFront2 = sprites.create(this.legFrontAnimation[0], this.kind);
+        this.legBack1 = sprites.create(this.legBackAnimation[0], this.kind);
+        this.legBack2 = sprites.create(this.legBackAnimation[0], this.kind);
+        this.wingFront = sprites.create(this.wingAnimation[0], this.kind);
     }
 
     public getHeadAnimationMaxIndex() {
@@ -468,5 +456,57 @@ class Dragon {
         pause(frameDelay);
         this.moveLegPair(this.legBack2, this.legFront2, true, xLength, frameDelay);
         pause(frameDelay);
+    }
+
+    public roar(msToRoar: number, pixelsToShake: number) {
+        music.play(music.createSoundEffect(
+            WaveShape.Noise,
+            196,
+            196,
+            255,
+            255,
+            msToRoar,
+            SoundExpressionEffect.None,
+            InterpolationCurve.Curve
+        ), music.PlaybackMode.InBackground)
+        scene.cameraShake(pixelsToShake, msToRoar * 1.5)
+    }
+
+    private weaken(framesToProcess: number, moveNeckIndicator: boolean, frameDelay: number) {
+        for (let index = 0; index < framesToProcess; index++) {
+            if (moveNeckIndicator) {
+                if (this.neckIndex + 4 < this.getNeckAnimationMaxIndex()) {
+                    this.moveNeck(this.neckIndex + 4, 0)
+                } 
+                else if (this.neckIndex < this.getNeckAnimationMaxIndex()) {
+                    this.moveNeck(this.neckIndex + 1, 0)
+                }
+            }
+            if (this.wingIndex < this.wingAnimationDeathMaxIndex) {
+                this.wingIndex += 1
+                this.wingFront.setImage(this.wingAnimationDeath[this.wingIndex])
+            }
+            if (this.bodyIndex < this.bodyAnimationMaxIndex) {
+                this.neck.y += 1
+                this.head.y += 1
+                this.bodyIndex += 1
+                this.body.setImage(this.bodyAnimation[this.bodyIndex])
+            }
+            if (this.legFrontIndex < this.legFrontAnimationMaxIndex) {
+                this.legFrontIndex += 1
+                this.legFront1.setImage(this.legFrontAnimation[this.legFrontIndex])
+                this.legFront2.setImage(this.legFrontAnimation[this.legFrontIndex])
+            }
+            if (this.legBackIndex < this.legBackAnimationMaxIndex) {
+                this.legBackIndex += 1
+                this.legBack1.setImage(this.legBackAnimation[this.legBackIndex])
+                this.legBack2.setImage(this.legBackAnimation[this.legBackIndex])
+            }
+            if (this.tailIndex < this.tailAnimationMaxIndex) {
+                this.tailIndex += 1
+                this.tail.setImage(this.tailAnimation[this.tailIndex])
+            }
+            pause(frameDelay)
+        }
     }
 }
