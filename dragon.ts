@@ -294,7 +294,7 @@ class Dragon {
         this.legBack2 = sprites.create(this.legBackAnimation[0], this.kind);
         this.wingFront = sprites.create(this.wingAnimation[0], this.kind);
 
-        this.renderable = scene.createRenderable(-0.5, (target, camera) => {});
+        this.renderable = scene.createRenderable(-0.5, (target, camera) => {},()=>true);
     }
 
     public getHeadAnimationMaxIndex() {
