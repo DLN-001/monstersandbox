@@ -206,7 +206,8 @@ namespace dragon {
  **/
 //% blockNamespace=custom color="#6699CC" blockGap=8
 class Dragon {
-
+    private renderable: scene.Renderable;
+    
     private kind: number;
 
     private bodyIndex = 0;
@@ -292,6 +293,8 @@ class Dragon {
         this.legBack1 = sprites.create(this.legBackAnimation[0], this.kind);
         this.legBack2 = sprites.create(this.legBackAnimation[0], this.kind);
         this.wingFront = sprites.create(this.wingAnimation[0], this.kind);
+
+        this.renderable = scene.createRenderable(-0.5, (target, camera) => {});
     }
 
     public getHeadAnimationMaxIndex() {
