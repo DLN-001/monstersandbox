@@ -6,7 +6,8 @@
     },
     "files": [
         "images.g.jres",
-        "images.g.ts"
+        "images.g.ts",
+        "custom.ts"
     ],
     "testFiles": [],
     "targetVersions": {
