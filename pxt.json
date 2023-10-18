@@ -1,13 +1,12 @@
 {
-    "name": "Dragon_JS",
+    "name": "Dragon_Images",
     "description": "",
     "dependencies": {
         "device": "*"
     },
     "files": [
         "images.g.jres",
-        "images.g.ts",
-        "dragon.ts"
+        "images.g.ts"
     ],
     "testFiles": [],
     "targetVersions": {
