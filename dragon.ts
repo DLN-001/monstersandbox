@@ -294,7 +294,20 @@ class Dragon {
         this.legBack2 = sprites.create(this.legBackAnimation[0], this.kind);
         this.wingFront = sprites.create(this.wingAnimation[0], this.kind);
 
-        this.renderable = scene.createRenderable(-0.5, (target, camera) => {},()=>true);
+        this.renderable = scene.createRenderable(-0.5, (image: Image, camera: scene.Camera) => {},()=>true);
+        // const buf = Buffer.create(120)
+        // const zLayer = 0
+        // this.renderable = scene.createRenderable(zLayer, (image: Image, camera: scene.Camera) => {
+        //     for (let x = 0; x < 160; x++) {
+        //         // Read the current screen content for modification
+        //         image.getRows(x, buf)
+        //         // Now "buf" contains a color value for the current pixel row 
+        //         // (it's actually a vertical column onscreen) where it can be modified.
+        //         buf[12] = 15
+        //         // Write the modified pixels back to the screen.
+        //         image.setRows(x, buf)
+        //     }
+        // })
     }
 
     public getHeadAnimationMaxIndex() {
